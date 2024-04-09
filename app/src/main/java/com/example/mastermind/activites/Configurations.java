@@ -45,7 +45,6 @@ public class Configurations extends AppCompatActivity implements View.OnClickLis
         confirmer = findViewById(R.id.bConfirmerConfigurations);
         confirmer.setOnClickListener(this);
 
-        remplirGrilles();
 
         //recoi
         Intent intent = getIntent();
@@ -54,6 +53,8 @@ public class Configurations extends AppCompatActivity implements View.OnClickLis
             nbCouleurs = intent.getIntExtra("nbCouleurs", 8);
             nbMaxDeTentative = intent.getIntExtra("nbMaxDeTentative", 10);
         }
+
+        remplirGrilles(longueurCode, nbCouleurs, nbMaxDeTentative);
 
     }
 
@@ -106,14 +107,14 @@ public class Configurations extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    private void remplirGrilles() {
+    private void remplirGrilles(int longueurCode, int nbCouleurs, int nbMaxDeTentative) {
         // Personnaliser la grille des codes
         grilleCode = findViewById(R.id.llCode);
         grilleCode.setColumnCount(colonnesCode);
 
         // Remplir la grille contenant la longueur du code
         for (int i = 0; i < colonnesCode; i++) {
-            personnaliserBoutonDefaut(grilleCode, "" + (i + 2));
+            personnaliserBoutonDefaut(grilleCode, "" + (i + 2), longueurCode, nbCouleurs, nbMaxDeTentative);
         }
 
         // Personnaliser la grille des couleurs
@@ -122,7 +123,7 @@ public class Configurations extends AppCompatActivity implements View.OnClickLis
 
         // Remplir la grille contenant le nombre de couleurs
         for (int i = 0; i < colonnesCouleurs; i++) {
-            personnaliserBoutonDefaut(grilleCouleurs, "" + (i + 2));
+            personnaliserBoutonDefaut(grilleCouleurs, "" + (i + 2), longueurCode, nbCouleurs, nbMaxDeTentative);
         }
 
         // Personnaliser la grille des tentatives
@@ -131,11 +132,11 @@ public class Configurations extends AppCompatActivity implements View.OnClickLis
 
         // Remplir la grille contenant le nombre maximum de tentatives
         for (int i = 0; i < colonnesTentatives; i++) {
-            personnaliserBoutonDefaut(grilleTentatives, "" + (i + 8));
+            personnaliserBoutonDefaut(grilleTentatives, "" + (i + 8), longueurCode, nbCouleurs, nbMaxDeTentative);
         }
     }
 
-    private void personnaliserBoutonDefaut(GridLayout gridLayout, String buttonText) {
+    private void personnaliserBoutonDefaut(GridLayout gridLayout, String buttonText, int longueurCode, int nbCouleurs, int nbMaxDeTentative) {
         Button bouton = new Button(this); // Créer un bouton
         bouton.setOnClickListener(this); // Écouteur de click
         // Personnaliser les boutons
@@ -144,12 +145,13 @@ public class Configurations extends AppCompatActivity implements View.OnClickLis
         bouton.setTextColor(Color.WHITE);
         Drawable drawable;
 
-        // Paramètres par défaut
-        if (gridLayout.getId() == R.id.llCode && buttonText.equals("4")) {
+
+        // Paramètres par défaut    replace hard code with String.valueOf(longueurCode) to have it adapt to the current value
+        if (gridLayout.getId() == R.id.llCode && buttonText.equals(String.valueOf(longueurCode))) {
             drawable = getResources().getDrawable(R.drawable.bouton_rectangle_choix_vert);
-        } else if (gridLayout.getId() == R.id.llCouleurs && buttonText.equals("8")) {
+        } else if (gridLayout.getId() == R.id.llCouleurs && buttonText.equals(String.valueOf(nbCouleurs))) {
             drawable = getResources().getDrawable(R.drawable.bouton_rectangle_choix_vert);
-        } else if (gridLayout.getId() == R.id.llTentatives && buttonText.equals("10")) {
+        } else if (gridLayout.getId() == R.id.llTentatives && buttonText.equals(String.valueOf(nbMaxDeTentative))) {
             drawable = getResources().getDrawable(R.drawable.bouton_rectangle_choix_vert);
         } else {
             drawable = getResources().getDrawable(R.drawable.bouton_rectangle_choix);
