@@ -89,7 +89,7 @@ public class Accueil extends AppCompatActivity implements View.OnClickListener {
                     versJeu.putExtra("nbMaxDeTentative", nbMaxDeTentative);
                     startActivity(versJeu);
                 }else{
-                    Toast.makeText(this, "Le format du couriel doit etre valid", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Le format du courriel doit être valide", Toast.LENGTH_SHORT).show();
                 }
             } else {
                 Toast.makeText(this, "Il faut include un courriel", Toast.LENGTH_SHORT).show();

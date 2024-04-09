@@ -4,4 +4,12 @@
     <string name="le_nombre_de_couleurs">Le nombre de couleurs:</string>
     <string name="la_longueur_du_code">La longueur du code:</string>
     <string name="configurations">CONFIGURATIONS</string>
+    <string name="courriel">Courriel</string>
+    <string name="adresse_courriel">Adresse courriel</string>
+    <string name="confirmer">Confirmer</string>
+    <string name="jouer">Jouer</string>
+    <string name="configurations_text">Configurations</string>
+    <string name="historique">Historique</string>
+    <string name="mastermind">Mastermind</string>
+    <string name="le_jeu_de">Le jeu de</string>
 </resources>

@@ -23,7 +23,7 @@
         android:shadowDx="5"
         android:shadowDy="5"
         android:shadowRadius="20"
-        android:text="Le jeu de"
+        android:text="@string/le_jeu_de"
         android:textColor="#FFFFFF"
         android:textSize="60sp"
         android:textStyle="bold" />
@@ -43,7 +43,7 @@
         android:shadowDx="5"
         android:shadowDy="5"
         android:shadowRadius="20"
-        android:text="Mastermind"
+        android:text="@string/mastermind"
         android:textColor="#FFFFFF"
         android:textSize="60sp"
         android:textStyle="bold" />
@@ -70,7 +70,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Courriel"
+            android:text="@string/courriel"
             android:textColor="#FFFFFF"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -82,9 +82,10 @@
             android:layout_weight="1"
             android:backgroundTint="#FFFFFF"
             android:ems="10"
+            android:hint="@string/adresse_courriel"
             android:inputType="textEmailAddress"
-            android:hint="Email Address"
-            android:textColor="#FFFFFF" />
+            android:textColor="#FFFFFF"
+            android:textColorHint="@color/white" />
 
         <Button
             android:id="@+id/btnConfirmerAccueil"
@@ -96,7 +97,7 @@
             android:layout_marginBottom="0dp"
             android:layout_weight="1"
             android:backgroundTint="#50C878"
-            android:text="Confirmer"
+            android:text="@string/confirmer"
             app:cornerRadius="5dp" />
     </LinearLayout>
 
@@ -108,7 +109,7 @@
         android:background="@drawable/coins_gauche_arrondis_jouer"
         android:gravity="end"
         android:paddingRight="20dp"
-        android:text="Jouer"
+        android:text="@string/jouer"
         android:textColor="#333333"
         android:textSize="40sp"
         android:textStyle="bold" />
@@ -119,7 +120,7 @@
         android:layout_height="wrap_content"
         android:gravity="end"
         android:paddingRight="20dp"
-        android:text="Configurations"
+        android:text="@string/configurations_text"
         android:textColor="#EDE9E9"
         android:textSize="30sp"
         android:textStyle="bold" />
@@ -130,7 +131,7 @@
         android:layout_height="wrap_content"
         android:gravity="end"
         android:paddingRight="20dp"
-        android:text="Historique"
+        android:text="@string/historique"
         android:textColor="#EDE9E9"
         android:textSize="30sp"
         android:textStyle="bold" />
