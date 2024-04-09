@@ -1,10 +1,8 @@
 package com.example.mastermind.activites;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.GridLayout;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,11 +14,6 @@ import com.example.mastermind.R;
 
 public class Jouer extends AppCompatActivity {
 
-    private String courriel;
-    private int longueurCode;
-    private int nbCouleurs;
-    private int nbMaxDeTentative;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,23 +24,6 @@ public class Jouer extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
-
-        Intent intent = getIntent();
-        if (intent != null) {
-            courriel = intent.getStringExtra("courriel");
-            longueurCode = intent.getIntExtra("longueurCode", 4); // valeur par defaut si le il y a un probleme avec le intent
-            nbCouleurs = intent.getIntExtra("nbCouleurs", 8);
-            nbMaxDeTentative = intent.getIntExtra("nbMaxDeTentative", 10);
-            // Displaying a toast message with all the received variables
-            String message = "Email: " + courriel + "\n"
-                    + "Longueur du Code: " + longueurCode + "\n"
-                    + "Nombre de Couleurs: " + nbCouleurs + "\n"
-                    + "Nombre Max de Tentative: " + nbMaxDeTentative;
-            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-        }else {
-            Toast.makeText(this, "Intent is null", Toast.LENGTH_SHORT).show();
-        }
 
         /*
         // Définir les variables pour le nombre de lignes et de colonnes
