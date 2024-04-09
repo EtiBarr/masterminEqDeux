@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/svFondHistorique"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#333333">
+
+    <LinearLayout
+        android:id="@+id/llfondHistorique"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#333333"
+        android:orientation="vertical"
+        tools:context=".vue.Historique">
+
+        <TextView
+            android:id="@+id/tvTitreHistorique"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="HISTORIQUE"
+            android:textColor="#FFFFFF"
+            android:textSize="35sp"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="156dp"
+            tools:layout_editor_absoluteY="64dp" />
+
+        <View
+            android:id="@+id/vBordureHistorique"
+            android:layout_width="100dp"
+            android:layout_height="2dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="20dp"
+            android:background="#797979" />
+
+        <ListView
+            android:id="@+id/lvPartiesH"
+            android:layout_width="wrap_content"
+            android:layout_height="547dp" />
+
+        <Button
+            android:id="@+id/bRevenirH"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="100dp"
+            android:layout_marginBottom="10dp"
+            android:backgroundTint="#50C878"
+            android:text="Revenir"
+            app:cornerRadius="5dp" />
+
+    </LinearLayout>
+
+</LinearLayout>

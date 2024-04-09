@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">mastermind</string>
+    <string name="app_name">MastermindProjetMobile_Gr02</string>
+    <string name="le_nombre_maximum_de_tentatives">Le nombre maximum de tentatives:</string>
+    <string name="le_nombre_de_couleurs">Le nombre de couleurs:</string>
+    <string name="la_longueur_du_code">La longueur du code:</string>
+    <string name="configurations">CONFIGURATIONS</string>
 </resources>

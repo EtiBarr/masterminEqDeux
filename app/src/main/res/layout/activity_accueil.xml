@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/llfondAccueil"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/gradient_fond"
+    tools:context=".activites.Accueil">
+
+    <TextView
+        android:id="@+id/tvTitreAccueil"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0sp"
+        android:layout_marginLeft="20sp"
+        android:layout_marginTop="30sp"
+        android:layout_marginEnd="0sp"
+        android:layout_marginRight="20sp"
+        android:paddingStart="10sp"
+        android:shadowColor="#FFFFFF"
+        android:shadowDx="5"
+        android:shadowDy="5"
+        android:shadowRadius="20"
+        android:text="Le jeu de"
+        android:textColor="#FFFFFF"
+        android:textSize="60sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvTitreJeuAccueil"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0sp"
+        android:layout_marginLeft="20sp"
+        android:layout_marginTop="0sp"
+        android:layout_marginEnd="0sp"
+        android:layout_marginRight="20sp"
+        android:layout_marginBottom="20sp"
+        android:paddingLeft="30sp"
+        android:shadowColor="#FFFFFF"
+        android:shadowDx="5"
+        android:shadowDy="5"
+        android:shadowRadius="20"
+        android:text="Mastermind"
+        android:textColor="#FFFFFF"
+        android:textSize="60sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:id="@+id/llFormulaireCourriel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="150dp"
+        android:background="@drawable/coins_arrondis_accueil"
+        android:backgroundTint="#333333"
+        android:elevation="80dp"
+        android:orientation="vertical"
+        android:paddingLeft="30dp"
+        android:paddingTop="30dp"
+        android:paddingRight="30dp"
+        android:paddingBottom="15dp">
+
+        <TextView
+            android:id="@+id/tvCourrielAccueil"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Courriel"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/etCourrielAccueil"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:backgroundTint="#FFFFFF"
+            android:ems="10"
+            android:inputType="text"
+            android:textColor="#FFFFFF" />
+
+        <Button
+            android:id="@+id/btnConfirmerAccueil"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="80dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="80dp"
+            android:layout_marginBottom="0dp"
+            android:layout_weight="1"
+            android:backgroundTint="#50C878"
+            android:text="Confirmer"
+            app:cornerRadius="5dp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvJouerAccueil"
+        android:layout_width="185dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:background="@drawable/coins_gauche_arrondis_jouer"
+        android:gravity="end"
+        android:paddingRight="20dp"
+        android:text="Jouer"
+        android:textColor="#333333"
+        android:textSize="40sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvConfigurationsAccueil"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:paddingRight="20dp"
+        android:text="Configurations"
+        android:textColor="#EDE9E9"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvHistoriqueAccueil"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:paddingRight="20dp"
+        android:text="Historique"
+        android:textColor="#EDE9E9"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+</LinearLayout>

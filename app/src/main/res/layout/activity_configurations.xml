@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/llfondConfigurations"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#333333"
+    android:orientation="vertical"
+    tools:context=".activites.Configurations">
+
+    <TextView
+        android:id="@+id/tvConfigurations"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="@string/configurations"
+        android:textColor="#FFFFFF"
+        android:textSize="35sp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="156dp"
+        tools:layout_editor_absoluteY="64dp" />
+
+    <View
+        android:id="@+id/vBordureConfigurations"
+        android:layout_width="200dp"
+        android:layout_height="2dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="50dp"
+        android:background="#797979" />
+
+    <TextView
+        android:id="@+id/tvCode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:text="@string/la_longueur_du_code"
+        android:textColor="#FFFFFF"
+        android:textSize="23sp" />
+
+    <HorizontalScrollView
+        android:id="@+id/hsvCode"
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+
+        <GridLayout
+            android:id="@+id/llCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|start"
+            android:orientation="horizontal">
+        </GridLayout>
+    </HorizontalScrollView>
+
+    <TextView
+        android:id="@+id/tvCouleurs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:text="@string/le_nombre_de_couleurs"
+        android:textColor="#FFFFFF"
+        android:textSize="23sp" />
+
+    <HorizontalScrollView
+        android:id="@+id/hsvCouleurs"
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+
+        <GridLayout
+            android:id="@+id/llCouleurs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|start"
+            android:orientation="horizontal">
+        </GridLayout>
+    </HorizontalScrollView>
+
+    <TextView
+        android:id="@+id/tvTentatives"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:text="@string/le_nombre_maximum_de_tentatives"
+        android:textColor="#FFFFFF"
+        android:textSize="23sp" />
+
+    <HorizontalScrollView
+        android:id="@+id/hsvTentatives"
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+
+        <GridLayout
+            android:id="@+id/llTentatives"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|start"
+            android:orientation="horizontal">
+        </GridLayout>
+    </HorizontalScrollView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clBoutons"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/bAnnulerConfigurations"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#50C878"
+            android:ems="10"
+            android:text="Annuler"
+            app:cornerRadius="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/bConfirmerConfigurations"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#50C878"
+            android:ems="10"
+            android:text="Confirmer"
+            app:cornerRadius="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

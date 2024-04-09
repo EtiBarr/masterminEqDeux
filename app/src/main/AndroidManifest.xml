@@ -13,7 +13,16 @@
         android:theme="@style/Theme.Mastermind"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".activites.Historique"
+            android:exported="false" />
+        <activity
+            android:name=".activites.Configurations"
+            android:exported="false" />
+        <activity
+            android:name=".activites.Jouer"
+            android:exported="false" />
+        <activity
+            android:name=".activites.Accueil"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
