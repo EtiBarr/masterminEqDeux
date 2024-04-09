@@ -1,5 +1,6 @@
 package com.example.mastermind.activites;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -23,6 +24,10 @@ public class Configurations extends AppCompatActivity implements View.OnClickLis
     Integer colonnesCouleurs = 7;
     Integer colonnesTentatives = 5;
 
+    private int longueurCode;
+    private int nbCouleurs;
+    private int nbMaxDeTentative;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,15 +46,31 @@ public class Configurations extends AppCompatActivity implements View.OnClickLis
         confirmer.setOnClickListener(this);
 
         remplirGrilles();
+
+        //recoi
+        Intent intent = getIntent();
+        if (intent != null) {
+            longueurCode = intent.getIntExtra("longueurCode", 4);
+            nbCouleurs = intent.getIntExtra("nbCouleurs", 8);
+            nbMaxDeTentative = intent.getIntExtra("nbMaxDeTentative", 10);
+        }
+
     }
 
     @Override
     public void onClick(View v) {
         if (v == annuler) {
+            setResult(RESULT_CANCELED);
             finish();
         } else if (v == confirmer) {
             // Sauvegarder les données
             //TODO
+
+            Intent resultatIntent = new Intent();
+            resultatIntent.putExtra("longueurCodeChoisi", longueurCode);
+            resultatIntent.putExtra("nbCouleursChoisi", nbCouleurs);
+            resultatIntent.putExtra("nbMaxDeTentativeChoisi", nbMaxDeTentative);
+            setResult(RESULT_OK, resultatIntent);
 
             // Fermer
             finish();

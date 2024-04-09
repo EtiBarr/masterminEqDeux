@@ -82,7 +82,8 @@
             android:layout_weight="1"
             android:backgroundTint="#FFFFFF"
             android:ems="10"
-            android:inputType="text"
+            android:inputType="textEmailAddress"
+            android:hint="Email Address"
             android:textColor="#FFFFFF" />
 
         <Button
