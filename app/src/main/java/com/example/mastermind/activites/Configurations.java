@@ -67,9 +67,9 @@ public class Configurations extends AppCompatActivity implements View.OnClickLis
             //TODO
 
             Intent resultatIntent = new Intent();
-            resultatIntent.putExtra("longueurCodeChoisi", longueurCode);
-            resultatIntent.putExtra("nbCouleursChoisi", nbCouleurs);
-            resultatIntent.putExtra("nbMaxDeTentativeChoisi", nbMaxDeTentative);
+            resultatIntent.putExtra("longueurCode", longueurCode);
+            resultatIntent.putExtra("nbCouleurs", nbCouleurs);
+            resultatIntent.putExtra("nbMaxDeTentative", nbMaxDeTentative);
             setResult(RESULT_OK, resultatIntent);
 
             // Fermer
@@ -85,8 +85,18 @@ public class Configurations extends AppCompatActivity implements View.OnClickLis
 
                 // Vérifier si le bouton est celui cliqué ou non
                 if (bouton == v) {
+
                     // Définir l'arrière-plan du bouton cliqué en vert
                     drawable = getResources().getDrawable(R.drawable.bouton_rectangle_choix_vert);
+                    // Associer la valeur du bouton aux variables appropriées
+                    String buttonText = bouton.getText().toString();
+                    if (parentLayout.getId() == R.id.llCode) {
+                        longueurCode = Integer.parseInt(buttonText);
+                    } else if (parentLayout.getId() == R.id.llCouleurs) {
+                        nbCouleurs = Integer.parseInt(buttonText);
+                    } else if (parentLayout.getId() == R.id.llTentatives) {
+                        nbMaxDeTentative = Integer.parseInt(buttonText);
+                    }
                 } else {
                     // Définir l'arrière-plan des autres boutons en gris
                     drawable = getResources().getDrawable(R.drawable.bouton_rectangle_choix);

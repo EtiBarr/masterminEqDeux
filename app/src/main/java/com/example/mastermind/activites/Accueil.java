@@ -60,9 +60,9 @@ public class Accueil extends AppCompatActivity implements View.OnClickListener {
         if (requestCode == REQUEST_CONFIG) {
             if (resultCode == RESULT_OK) {
 
-                longueurCode = data.getIntExtra("longueurCodeChoisi", 4);
-                nbCouleurs = data.getIntExtra("nbCouleurs", 8);
-                nbMaxDeTentative = data.getIntExtra("nbMaxDeTentative", 10);
+                longueurCode = data.getIntExtra("longueurCode", longueurCode);
+                nbCouleurs = data.getIntExtra("nbCouleurs", nbCouleurs);
+                nbMaxDeTentative = data.getIntExtra("nbMaxDeTentative", nbMaxDeTentative);
 
                 // Display the values of the variables using Toast for testing ***********************
                 String message = "Longueur du code: " + longueurCode + "\n" +
