@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,6 +22,8 @@ public class Accueil extends AppCompatActivity implements View.OnClickListener {
     private TextView jouer;
     private TextView configurations;
     private TextView historique;
+    private EditText courriel;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,13 +44,23 @@ public class Accueil extends AppCompatActivity implements View.OnClickListener {
 
         historique = findViewById(R.id.tvHistoriqueAccueil);
         historique.setOnClickListener(this);
+
+        courriel = findViewById(R.id.etCourrielAccueil);
     }
 
     @Override
     public void onClick(View v) {
         if (v == jouer) {
-            Intent versJeu = new Intent(this, Jouer.class);
-            startActivity(versJeu);
+
+            if (courriel.getText().toString() != "") {
+                Intent versJeu = new Intent(this, Jouer.class);
+                versJeu.putExtra("courriel", courriel.getText().toString());
+                startActivity(versJeu);
+            }
+
+            else {
+            }
+
         } else if (v == configurations) {
             Intent versConfigurations = new Intent(this, Configurations.class);
             startActivity(versConfigurations);
