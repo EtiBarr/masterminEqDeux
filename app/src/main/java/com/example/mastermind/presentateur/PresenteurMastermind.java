@@ -17,7 +17,8 @@ public class PresenteurMastermind {
     private Feedback feedback;
     private Mastermind mastermind;
     private RecordCode recordCode;
-    public PresenteurMastermind(Activity activites){
+
+  /*  public PresenteurMastermind(Activity activites){
         this.activites = activites;
         this.code = ModeleManager.getCode();
         this.feedback = ModeleManager.getFeedback();
@@ -25,14 +26,19 @@ public class PresenteurMastermind {
         this.recordCode = ModeleManager.getRecordCode();
     }
 
+   */
+
     public PresenteurMastermind(Jouer pJouer, Code pCode, Feedback pFeedback, Mastermind pMastermind, RecordCode pRecordCode){
-        jouer = pJouer;
+        //jouer = pJouer;
         code = pCode;
         feedback = pFeedback;
         mastermind = pMastermind;
         recordCode = pRecordCode;
     }
 
+    public PresenteurMastermind(Activity jouer){
+        this.jouer = new Jouer();
+    }
     public void initializer(){
         try{
             jouer.afficherCouleursDisponible();
