@@ -18,8 +18,8 @@ public class Feedback {
         int taille = code1.getLongueurCode();
 
         // Copie des tableaux
-        ArrayList<String> code1Copie = code1.getCode();
-        ArrayList<String> code2Copie = code2.getCode();
+        ArrayList<String> code1Copie = code1.getCouleurs();
+        ArrayList<String> code2Copie = code2.getCouleurs();
 
         for (int i = 0; i < taille; i++) {
 

@@ -16,6 +16,14 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.mastermind.R;
+import com.example.mastermind.dao.HttpJsonService;
+import com.example.mastermind.modele.Code;
+import com.example.mastermind.modele.RecordCode;
+
+import org.json.JSONException;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class Accueil extends AppCompatActivity implements View.OnClickListener {
 
@@ -49,7 +57,21 @@ public class Accueil extends AppCompatActivity implements View.OnClickListener {
         historique.setOnClickListener(this);
 
         courriel = findViewById(R.id.etCourrielAccueil);
+
+        Thread thread = new Thread(() -> {
+            HttpJsonService service = new HttpJsonService();
+            try {
+                ArrayList<String> couleurs = service.obtenirCouleurs();
+                System.out.println(couleurs);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        thread.start();
     }
+
 
     private int longueurCode = 4; // valeur par default
     private int nbCouleurs = 8; // valeur par default
