@@ -21,8 +21,16 @@ public class Modele {
         return couleurs;
     }
 
+    public Mastermind getMastermind() {
+        return partie;
+    }
+
     public void setCouleurs(ArrayList<String> couleurs) {
         this.couleurs = couleurs;
+    }
+
+    public void setMastermind(Mastermind partie) {
+        this.partie = partie;
     }
 
     public void setRecord(RecordCode record) {

@@ -40,6 +40,10 @@ public class PresenteurMastermind {
                     modele.setCode(code);
                     modele.setCouleurs(couleurs);
 
+                    Mastermind partie = new Mastermind(code);
+                    modele.setMastermind(partie);
+
+                    System.out.println("ok new approach:  " + modele.getCode());
                     ((Jouer)activite).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -103,8 +107,7 @@ public class PresenteurMastermind {
     }
 
     public Mastermind getMastermind() {
-
-        Mastermind partie = new Mastermind(modele.getCode());
-        return partie;
+            System.out.print("ehhh   " + modele.getCode());
+        return modele.getMastermind();
     }
 }

@@ -59,7 +59,7 @@ public class Jouer extends AppCompatActivity implements View.OnClickListener {
         Intent intent = getIntent();
         if (intent != null) {
             courriel = intent.getStringExtra("courriel");
-            longueurCode = intent.getIntExtra("longueurCode", 4); // valeur par defaut si le il y a un probleme avec le intent
+            longueurCode = intent.getIntExtra("longueurCode", 4)  ; // valeur par defaut si le il y a un probleme avec le intent
             nbCouleurs = intent.getIntExtra("nbCouleurs", 8);
             nbMaxDeTentative = intent.getIntExtra("nbMaxDeTentative", 10);
             // Displaying a toast message with all the received variables
@@ -84,7 +84,7 @@ public class Jouer extends AppCompatActivity implements View.OnClickListener {
         presenteurMastermind = new PresenteurMastermind(this);
         presenteurMastermind.initializer(nbCouleurs, longueurCode);
 
-        partie = presenteurMastermind.getMastermind();
+
     }
 
     @Override
@@ -158,9 +158,22 @@ public class Jouer extends AppCompatActivity implements View.OnClickListener {
 
     public void afficherGrille() throws JSONException, IOException {
 
+        /** Temporary **/
+        partie = presenteurMastermind.getMastermind();
+        System.out.println("code partie = " +partie.getCode());
+
+        for (int i = 0; i < longueurCode; i++) {
+
+            Button bouton = (Button) lvCodeSecret.getChildAt(i);
+            String couleur = partie.getCode().getCouleurAtPosition(i);
+
+            bouton.getBackground().setTint(Color.parseColor("#" + couleur));
+        }
+
+
         // Définir les variables pour le nombre de lignes et de colonnes
         int nbLignes = nbMaxDeTentative;
-        int nbColomnes = longueurCode;
+        int nbColomnes = longueurCode+1;
 
         System.out.println("nblignes : " + nbMaxDeTentative);
 
@@ -182,7 +195,8 @@ public class Jouer extends AppCompatActivity implements View.OnClickListener {
         }
 
         for (int j = 0; j < nbLignes; j++) {
-            for (int i = 0; i < nbColomnes; i++) {
+            for (int i = 0; i < nbColomnes-1; i++) {
+
                 final Button bouton = new Button(Jouer.this);
                 bouton.setBackgroundResource(R.drawable.bouton_oval);
                 final int couleurInt = Color.GRAY;
@@ -200,6 +214,40 @@ public class Jouer extends AppCompatActivity implements View.OnClickListener {
                 bouton.setTag(couleurInt);
                 grille.addView(bouton);
             }
+
+            // La dernière colomne est pour un feedback
+            GridLayout grilleFeedback = new GridLayout(this);
+            grilleFeedback.setRowCount(longueurCode / 2);
+            grilleFeedback.setColumnCount(longueurCode / 2);
+
+            GridLayout.LayoutParams layoutParamsFeedback = new GridLayout.LayoutParams();
+            layoutParamsFeedback.width = buttonWidth;
+            layoutParamsFeedback.height = buttonHeight;
+            layoutParamsFeedback.setMargins(30, 0, 0, 0);
+
+            grilleFeedback.setLayoutParams(layoutParamsFeedback);
+
+            for (int k = 0; k < longueurCode; k++) {
+
+                final Button boutonFeedback = new Button(Jouer.this);
+                boutonFeedback.setBackgroundResource(R.drawable.bouton_oval);
+                final int couleurInt = Color.GRAY;
+
+                int largeurFeedback = buttonWidth / 2;
+                int hauteurFeedback = buttonHeight / 2;
+
+                GridLayout.LayoutParams layoutParamsBoutonFeedback = new GridLayout.LayoutParams();
+                layoutParamsBoutonFeedback.width = largeurFeedback;
+                layoutParamsBoutonFeedback.height = hauteurFeedback;
+                layoutParamsBoutonFeedback.setMargins(0, 0, 0, 0);
+
+                boutonFeedback.setLayoutParams(layoutParamsBoutonFeedback);
+                boutonFeedback.getBackground().setTint(couleurInt);
+                boutonFeedback.setTag(couleurInt);
+                grilleFeedback.addView(boutonFeedback);
+            }
+
+            grille.addView(grilleFeedback);
         }
     }
 
@@ -284,8 +332,8 @@ public class Jouer extends AppCompatActivity implements View.OnClickListener {
 
             int index = 0;
             while ((int) debutGrille.getTag() != Color.GRAY) {
-                debutGrille = (Button) grille.getChildAt(index+longueurCode);
-                index += longueurCode;
+                debutGrille = (Button) grille.getChildAt(index+longueurCode+1);
+                index += longueurCode+1;
             }
 
             for (int i = 0; i < lvTentatives.getChildCount(); i++) {
@@ -307,6 +355,7 @@ public class Jouer extends AppCompatActivity implements View.OnClickListener {
             Toast.makeText(getApplicationContext(), "Vous devez remplir la tentative", Toast.LENGTH_SHORT).show();
         }
     }
+
 
 
 
