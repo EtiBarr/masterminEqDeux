@@ -58,8 +58,23 @@ public class PresenteurMastermind {
         }.start();
     }
 
-    public void ajouterCouleur() {
+    public void ajouterCouleur(int couleur) {
 
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    ((Jouer)activite).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ((Jouer)activite).ajouterCouleurTentative(couleur);
+                        }
+                    });
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }.start();
     }
 
     public ArrayList<String> obtenirCouleurs() {

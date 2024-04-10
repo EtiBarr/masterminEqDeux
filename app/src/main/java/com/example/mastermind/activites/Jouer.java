@@ -2,6 +2,7 @@ package com.example.mastermind.activites;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
@@ -106,13 +107,13 @@ public class Jouer extends AppCompatActivity {
             boutonCouleur.setLayoutParams(layoutParams);
             lvCouleursDisponibles.addView(boutonCouleur);
 
+            final int finalCouleurInt = couleurInt; // Finalize the color for use in the OnClickListener
 
             // Ajouter un écouteur
             boutonCouleur.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-                     presenteurMastermind.ajouterCouleur();
+                     presenteurMastermind.ajouterCouleur(couleurInt);
                 }
             });
         }
@@ -192,6 +193,7 @@ public class Jouer extends AppCompatActivity {
         for (int i = 0; i < longueurCode; i++) {
             Button bouton = new Button(Jouer.this);
             bouton.setBackgroundResource(R.drawable.bouton_oval);
+            bouton.getBackground().setTint(Color.GRAY);
 
             int availableWidth = lvTentatives.getWidth();
             int availableHeigth = lvTentatives.getHeight();
@@ -212,7 +214,29 @@ public class Jouer extends AppCompatActivity {
             layoutParams.setMargins(0, 0, 20, 0);
 
             bouton.setLayoutParams(layoutParams);
+            bouton.setTag(Color.GRAY);
+
             lvTentatives.addView(bouton);
+        }
+    }
+
+    public void ajouterCouleurTentative(int couleur) {
+
+        int compteur = 0;
+        boolean couleurAjoute = false;
+
+        while (compteur < lvTentatives.getChildCount() && !couleurAjoute) {
+
+            Button bouton = (Button) lvTentatives.getChildAt(compteur);
+            int couleurBouton = (int) bouton.getTag();
+
+            if (couleurBouton == Color.GRAY) {
+                bouton.getBackground().setTint(couleur);
+                bouton.setTag(couleur);
+                couleurAjoute = true;
+            }
+
+            compteur++;
         }
     }
 }
