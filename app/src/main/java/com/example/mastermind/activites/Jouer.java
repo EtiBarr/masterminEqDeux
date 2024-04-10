@@ -143,7 +143,7 @@ public class Jouer extends AppCompatActivity {
                     public void run() {
 
                         // Afficher les couleurs
-                        for (int i = couleurs.size()-1; i >= 0; i--) {
+                        for (int i = nbCouleurs-1; i >= 0; i--) {
                             Button boutonCouleur = new Button(Jouer.this);
                             boutonCouleur.setBackgroundResource(R.drawable.bouton_rectangle);
 
