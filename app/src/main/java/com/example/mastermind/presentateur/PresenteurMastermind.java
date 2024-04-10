@@ -4,48 +4,63 @@ package com.example.mastermind.presentateur;
 import android.app.Activity;
 
 import com.example.mastermind.activites.Jouer;
+import com.example.mastermind.dao.MastermindDao;
 import com.example.mastermind.modele.Code;
 import com.example.mastermind.modele.Feedback;
 import com.example.mastermind.modele.Mastermind;
+import com.example.mastermind.modele.Modele;
 import com.example.mastermind.modele.ModeleManager;
 import com.example.mastermind.modele.RecordCode;
 
+import org.json.JSONException;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 public class PresenteurMastermind {
-    private Jouer jouer;
-    private Activity activites;
-    private Code code;
-    private Feedback feedback;
-    private Mastermind mastermind;
-    private RecordCode recordCode;
+    private Activity activite;
+    private Modele modele;
 
-  /*  public PresenteurMastermind(Activity activites){
-        this.activites = activites;
-        this.code = ModeleManager.getCode();
-        this.feedback = ModeleManager.getFeedback();
-        this.mastermind = ModeleManager.getMastermind();
-        this.recordCode = ModeleManager.getRecordCode();
+    public PresenteurMastermind(Activity activite){
+        this.activite = activite;
+        this.modele = ModeleManager.getModele();
+    }
+    public void initializer(int nbCouleurs){
+
+        new Thread() {
+            @Override
+            public void run() {
+
+                try {
+
+                    ArrayList<String> couleurs  = MastermindDao.obtenirCouleurs(nbCouleurs);
+                    modele.setCouleurs(couleurs);
+
+                    ((Jouer)activite).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                ((Jouer)activite).afficherCouleursDisponible();
+                                ((Jouer)activite).afficherCodeSecret();
+                                ((Jouer)activite).afficherGrille();
+                            } catch (JSONException e) {
+                                throw new RuntimeException(e);
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    });
+
+                } catch (Exception e){
+                e.printStackTrace();
+                }
+            }
+
+        }.start();
     }
 
-   */
-
-    public PresenteurMastermind(Jouer pJouer, Code pCode, Feedback pFeedback, Mastermind pMastermind, RecordCode pRecordCode){
-        //jouer = pJouer;
-        code = pCode;
-        feedback = pFeedback;
-        mastermind = pMastermind;
-        recordCode = pRecordCode;
-    }
-
-    public PresenteurMastermind(Activity jouer){
-        this.jouer = new Jouer();
-    }
-    public void initializer(){
-        try{
-            jouer.afficherCouleursDisponible();
-            jouer.afficherCodeSecret();
-            jouer.afficherGrille();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+    public ArrayList<String> obtenirCouleurs() {
+        return modele.getCouleurs();
     }
 }

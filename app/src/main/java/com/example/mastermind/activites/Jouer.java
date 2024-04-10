@@ -76,7 +76,7 @@ public class Jouer extends AppCompatActivity {
         lvTentatives = findViewById(R.id.lvTentative);
 
 
-        runOnUiThread(new Runnable() {
+    /*    runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -90,52 +90,13 @@ public class Jouer extends AppCompatActivity {
                     throw new RuntimeException(e);
                 }
             }
-        });
+        });*/
         presenteurMastermind = new PresenteurMastermind(this);
-        presenteurMastermind.initializer();
+        presenteurMastermind.initializer(nbCouleurs);
 
 
-/*
-        // Tableau des couleurs au format RGB
-        int[] colors = {
-                0xffff0000, // Rouge
-                0xff00ff00, // Vert
-                0xff0000ff, // Bleu
-                0xffffff00, // Jaune
-                0xffff00ff, // Magenta
-                0xffffa500, // Orange
-                0xff000000, // Noir
-                0xffffffff  // Blanc
-        };
 
-        // Trouver le GridLayout dans votre layout
-        GridLayout grilleJeu = findViewById(R.id.glJeu);
 
-        // Boucler à travers les lignes et les colonnes pour créer des boutons dynamiquement
-        for (int i = 0; i < numRows; i++) {
-            for (int j = 0; j < numColumns; j++) {
-                Button bouton = new Button(this);
-                bouton.setLayoutParams(new GridLayout.LayoutParams(
-                        GridLayout.spec(i), GridLayout.spec(j)));
-
-                // Attribuer aux boutons toutes les couleurs
-                int colorIndex = i * numColumns + j;
-                if (colorIndex < colors.length) {
-                    bouton.setBackgroundColor(colors[colorIndex]);
-                } else {
-                    // Si toutes les couleurs ont été utilisées, définir le fond en gris
-                    bouton.setBackgroundColor(0xff999999);
-                }
-
-                // Définir la taille et les marges du bouton
-                GridLayout.LayoutParams params = (GridLayout.LayoutParams) bouton.getLayoutParams();
-                params.width = 50;
-                params.height = 50;
-                params.setMargins(10, 5, 10, 5);
-
-                grilleJeu.addView(bouton);
-            }
-        }*/
 
     }
 /*
@@ -157,47 +118,28 @@ public class Jouer extends AppCompatActivity {
 
     public void afficherCouleursDisponible() throws JSONException, IOException {
 
+        ArrayList<String> couleurs = presenteurMastermind.obtenirCouleurs();
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                final ArrayList<String> couleurs;
-                try {
-                    couleurs = MastermindDao.obtenirCouleurs(nbCouleurs);
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+        // Afficher les couleurs
+        for (int i = nbCouleurs-1; i >= 0; i--) {
+            Button boutonCouleur = new Button(Jouer.this);
+            boutonCouleur.setBackgroundResource(R.drawable.bouton_rectangle);
 
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
+            int couleurInt = Color.parseColor("#" + couleurs.get(i));
+            boutonCouleur.getBackground().setTint(couleurInt);
 
-                        // Afficher les couleurs
-                        for (int i = nbCouleurs-1; i >= 0; i--) {
-                            Button boutonCouleur = new Button(Jouer.this);
-                            boutonCouleur.setBackgroundResource(R.drawable.bouton_rectangle);
+            // Convertir de dp à px
+            float scale = getResources().getDisplayMetrics().density;
+            int widthInPixels = (int) (50 * scale + 0.5f);
+            int heightInPixels = (int) (50 * scale + 0.5f);
 
-                            int couleurInt = Color.parseColor("#" + couleurs.get(i));
-                            boutonCouleur.getBackground().setTint(couleurInt);
-
-                            // Convertir de dp à px
-                            float scale = getResources().getDisplayMetrics().density;
-                            int widthInPixels = (int) (50 * scale + 0.5f);
-                            int heightInPixels = (int) (50 * scale + 0.5f);
-
-                            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                                    widthInPixels, heightInPixels
-                            );
-                            layoutParams.setMargins(0, 0, 0, 10);
-                            boutonCouleur.setLayoutParams(layoutParams);
-                            lvCouleursDisponibles.addView(boutonCouleur);
-                            }
-                    }
-                });
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                    widthInPixels, heightInPixels
+            );
+            layoutParams.setMargins(0, 0, 0, 10);
+            boutonCouleur.setLayoutParams(layoutParams);
+            lvCouleursDisponibles.addView(boutonCouleur);
             }
-        }).start();
     }
 
     public void afficherCodeSecret() throws JSONException, IOException {
