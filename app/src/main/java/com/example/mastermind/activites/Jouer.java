@@ -217,6 +217,15 @@ public class Jouer extends AppCompatActivity {
             bouton.setTag(Color.GRAY);
 
             lvTentatives.addView(bouton);
+
+            bouton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    bouton.setTag(Color.GRAY);
+                    bouton.getBackground().setTint(Color.GRAY);
+                }
+            });
+
         }
     }
 
@@ -239,4 +248,5 @@ public class Jouer extends AppCompatActivity {
             compteur++;
         }
     }
+
 }
