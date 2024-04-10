@@ -18,6 +18,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.mastermind.R;
 import com.example.mastermind.dao.MastermindDao;
 import com.example.mastermind.modele.Mastermind;
+import com.example.mastermind.presentateur.PresenteurMastermind;
 
 import org.json.JSONException;
 
@@ -33,7 +34,7 @@ public class Jouer extends AppCompatActivity {
     private GridLayout grille;
     private LinearLayout lvCodeSecret;
     private LinearLayout lvCouleursDisponibles;
-
+    private PresenteurMastermind presenteurMastermind;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,20 +68,8 @@ public class Jouer extends AppCompatActivity {
         lvCouleursDisponibles = findViewById(R.id.lvCouleursDisponibles);
         lvCodeSecret = findViewById(R.id.lvCodeSecretJouer);
 
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    afficherCouleursDisponible();
-                    afficherCodeSecret();
-                    afficherGrille();
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
+        presenteurMastermind = new PresenteurMastermind(this);
+        presenteurMastermind.initializer();
 
 
 /*
@@ -126,6 +115,22 @@ public class Jouer extends AppCompatActivity {
         }*/
 
     }
+/*
+    runOnUiThread(new Runnable() {
+        @Override
+        public void run() {
+            try {
+                afficherCouleursDisponible();
+                afficherCodeSecret();
+                afficherGrille();
+            } catch (JSONException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    });
+    */
 
     public void afficherCouleursDisponible() throws JSONException, IOException {
 
