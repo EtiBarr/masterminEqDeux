@@ -11,6 +11,11 @@ public class Code {
     int longueurCode;
     int id;
 
+    public Code(){ // constructeur par default
+        this.longueurCode = 0;
+        this.id = 0;
+        this.couleurs = new ArrayList<>();
+    }
 
     public Code(int longueur, int id, ArrayList<String> couleurs) {
 

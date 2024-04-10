@@ -6,6 +6,12 @@ public class RecordCode {
     private String courriel;
     private int idCode;
 
+    public RecordCode(){ //constructeur par default
+        this.nbTentatives = 0;
+        this.courriel = "no email";
+        this.idCode = 0;
+    }
+
     public RecordCode(int nbTentatives, String courriel, int idCode) {
 
         this.nbTentatives = nbTentatives;

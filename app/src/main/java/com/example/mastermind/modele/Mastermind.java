@@ -9,6 +9,13 @@ public class Mastermind {
     private ArrayList<Feedback> feedbacks;
     private int nbTentatives;
 
+    public Mastermind(){ // constructeur par default
+        this.code = new Code();
+        this.tentatives = new ArrayList<>();
+        this.feedbacks = new ArrayList<>();
+        this.nbTentatives = 0;
+    }
+
     public Mastermind(Code code) {
 
         this.code = code;

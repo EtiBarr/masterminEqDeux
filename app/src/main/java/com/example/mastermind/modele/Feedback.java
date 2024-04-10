@@ -7,6 +7,10 @@ public class Feedback {
     private int couleurPosition;
     private int couleur;
 
+    public Feedback(){ //constructeur par default
+        this.couleur = 0;
+        this.couleurPosition = 0;
+    }
     public Feedback(Code code1, Code code2) {
 
         if (code1.longueurCode != code2.getLongueurCode()) {
