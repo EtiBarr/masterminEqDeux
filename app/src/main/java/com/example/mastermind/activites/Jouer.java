@@ -27,7 +27,7 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Jouer extends AppCompatActivity {
+public class Jouer extends AppCompatActivity implements View.OnClickListener {
 
     private String courriel;
     private int longueurCode;
@@ -38,6 +38,8 @@ public class Jouer extends AppCompatActivity {
     private LinearLayout lvCouleursDisponibles;
 
     private LinearLayout lvTentatives;
+    private Button btnConfirmer;
+    private Mastermind partie;
 
 
     private PresenteurMastermind presenteurMastermind;
@@ -75,10 +77,22 @@ public class Jouer extends AppCompatActivity {
         lvCouleursDisponibles = findViewById(R.id.lvCouleursDisponibles);
         lvCodeSecret = findViewById(R.id.lvCodeSecretJouer);
         lvTentatives = findViewById(R.id.lvTentative);
+        btnConfirmer = findViewById(R.id.btnConfirmer);
+        btnConfirmer.setOnClickListener(this);
 
 
         presenteurMastermind = new PresenteurMastermind(this);
-        presenteurMastermind.initializer(nbCouleurs);
+        presenteurMastermind.initializer(nbCouleurs, longueurCode);
+
+        partie = presenteurMastermind.getMastermind();
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        if (v == btnConfirmer) {
+            presenteurMastermind.ajouterTentative();
+        }
 
     }
 
@@ -171,7 +185,7 @@ public class Jouer extends AppCompatActivity {
             for (int i = 0; i < nbColomnes; i++) {
                 final Button bouton = new Button(Jouer.this);
                 bouton.setBackgroundResource(R.drawable.bouton_oval);
-                final int couleurInt = Color.parseColor("#EAEAEA");
+                final int couleurInt = Color.GRAY;
 
                 int finalButtonWidth = buttonWidth;
                 int finalButtonHeight = buttonHeight;
@@ -183,6 +197,7 @@ public class Jouer extends AppCompatActivity {
 
                 bouton.setLayoutParams(layoutParams);
                 bouton.getBackground().setTint(couleurInt);
+                bouton.setTag(couleurInt);
                 grille.addView(bouton);
             }
         }
@@ -248,5 +263,51 @@ public class Jouer extends AppCompatActivity {
             compteur++;
         }
     }
+
+    public void ajouterTentative() {
+
+        boolean tentativeRemplie = true;
+        for (int i = 0; i < lvTentatives.getChildCount(); i++) {
+
+            Button bouton = (Button) lvTentatives.getChildAt(i);
+            int couleurBouton = (int) bouton.getTag();
+
+            if (couleurBouton == Color.GRAY) {
+                tentativeRemplie = false;
+            }
+        }
+
+        if (tentativeRemplie) {
+
+            // Trouver la première rangée de la grille non remplie en partant de la grille
+            Button debutGrille = (Button) grille.getChildAt(0);
+
+            int index = 0;
+            while ((int) debutGrille.getTag() != Color.GRAY) {
+                debutGrille = (Button) grille.getChildAt(index+longueurCode);
+                index += longueurCode;
+            }
+
+            for (int i = 0; i < lvTentatives.getChildCount(); i++) {
+
+                Button bouton = (Button) lvTentatives.getChildAt(i);
+                int couleurBouton = (int) bouton.getTag();
+
+                Button boutonGrille = (Button) grille.getChildAt(index + i);
+                boutonGrille.getBackground().setTint(couleurBouton);
+                boutonGrille.setTag(couleurBouton);
+
+                // Réinitialiser la tentative
+                bouton.setTag(Color.GRAY);
+                bouton.getBackground().setTint(Color.GRAY);
+            }
+        }
+
+        else {
+            Toast.makeText(getApplicationContext(), "Vous devez remplir la tentative", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
 
 }

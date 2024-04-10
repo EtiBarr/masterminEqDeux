@@ -30,4 +30,11 @@ public class Mastermind {
         this.nbTentatives++;
     }
 
+    public Code getCode() {
+        return this.code;
+    }
+
+    public ArrayList<ArrayList<String>> getTentatives() {
+        return tentatives;
+    }
 }

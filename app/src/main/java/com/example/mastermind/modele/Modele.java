@@ -7,6 +7,7 @@ public class Modele {
     private ArrayList<String> couleurs;
     private RecordCode record;
     private Code code;
+    private Mastermind partie;
 
     public Code getCode() {
         return code;

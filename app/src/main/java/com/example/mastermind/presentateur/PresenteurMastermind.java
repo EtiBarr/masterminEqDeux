@@ -26,7 +26,7 @@ public class PresenteurMastermind {
         this.activite = activite;
         this.modele = ModeleManager.getModele();
     }
-    public void initializer(int nbCouleurs){
+    public void initializer(int nbCouleurs, int longueurCode){
 
         new Thread() {
             @Override
@@ -35,6 +35,9 @@ public class PresenteurMastermind {
                 try {
 
                     ArrayList<String> couleurs  = MastermindDao.obtenirCouleurs(nbCouleurs);
+                    Code code = MastermindDao.obtenirCode(nbCouleurs, longueurCode);
+
+                    modele.setCode(code);
                     modele.setCouleurs(couleurs);
 
                     ((Jouer)activite).runOnUiThread(new Runnable() {
@@ -77,7 +80,31 @@ public class PresenteurMastermind {
         }.start();
     }
 
+    public void ajouterTentative() {
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    ((Jouer)activite).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ((Jouer)activite).ajouterTentative();
+                        }
+                    });
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+
     public ArrayList<String> obtenirCouleurs() {
         return modele.getCouleurs();
+    }
+
+    public Mastermind getMastermind() {
+
+        Mastermind partie = new Mastermind(modele.getCode());
+        return partie;
     }
 }

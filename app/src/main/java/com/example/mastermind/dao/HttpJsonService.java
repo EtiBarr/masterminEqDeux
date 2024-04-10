@@ -50,7 +50,7 @@ public class HttpJsonService {
                 code.add(codeCouleurs.getString(j));
             }
 
-            codeSecret = new Code(nombreCouleurs, codeId, code);
+            codeSecret = new Code(codeCouleurs.length(), codeId, code);
             codesSecrets.add(codeSecret);
         }
 
