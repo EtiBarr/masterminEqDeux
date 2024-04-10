@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
@@ -34,7 +35,12 @@ public class Jouer extends AppCompatActivity {
     private GridLayout grille;
     private LinearLayout lvCodeSecret;
     private LinearLayout lvCouleursDisponibles;
+
+    private LinearLayout lvTentatives;
+
+
     private PresenteurMastermind presenteurMastermind;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +73,24 @@ public class Jouer extends AppCompatActivity {
         grille = findViewById(R.id.glJeu);
         lvCouleursDisponibles = findViewById(R.id.lvCouleursDisponibles);
         lvCodeSecret = findViewById(R.id.lvCodeSecretJouer);
+        lvTentatives = findViewById(R.id.lvTentative);
 
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    afficherCouleursDisponible();
+                    afficherCodeSecret();
+                    afficherGrille();
+                    afficherTentative(4);
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
         presenteurMastermind = new PresenteurMastermind(this);
         presenteurMastermind.initializer();
 
@@ -265,4 +288,35 @@ public class Jouer extends AppCompatActivity {
             }
         }).start();
     }
+
+    public void afficherTentative(int longueurCode) {
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < longueurCode; i++) {
+                    Button bouton = new Button(Jouer.this);
+
+                    runOnUiThread(new Runnable() {
+
+                        @Override
+                        public void run() {
+
+
+                            GridLayout.LayoutParams layoutParams = new GridLayout.LayoutParams();
+
+                            layoutParams.setMargins(20, 0, 20, 20);
+
+                            bouton.setLayoutParams(layoutParams);
+                          //  bouton.getBackground().setTint(couleurInt);
+                            lvTentatives.addView(bouton);
+                        }
+                    });
+                }}
+            }).start();
+    }
+
+
+
+
 }
