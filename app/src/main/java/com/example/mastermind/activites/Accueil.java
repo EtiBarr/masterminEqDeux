@@ -17,6 +17,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.mastermind.R;
 import com.example.mastermind.dao.HttpJsonService;
+import com.example.mastermind.dao.bdSQLite;
 import com.example.mastermind.modele.Code;
 import com.example.mastermind.modele.RecordCode;
 
@@ -24,6 +25,7 @@ import org.json.JSONException;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Accueil extends AppCompatActivity implements View.OnClickListener {
 
@@ -35,6 +37,9 @@ public class Accueil extends AppCompatActivity implements View.OnClickListener {
     private TextView historique;
     private EditText courriel;
 
+    private static final int DATABASE_VERSION = 1;
+    private static final String DATABASE_NOM = "partie.db";
+    bdSQLite baseDeDonneeSQLite;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +51,8 @@ public class Accueil extends AppCompatActivity implements View.OnClickListener {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        baseDeDonneeSQLite = new bdSQLite(this, DATABASE_NOM, null, DATABASE_VERSION);
 
         jouer = findViewById(R.id.tvJouerAccueil);
         jouer.setOnClickListener(this);
