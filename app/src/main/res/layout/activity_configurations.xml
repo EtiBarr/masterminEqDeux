@@ -5,8 +5,8 @@
     android:id="@+id/llfondConfigurations"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#333333"
     android:orientation="vertical"
+    android:background="@drawable/gradient_fond"
     tools:context=".activites.Configurations">
 
     <TextView

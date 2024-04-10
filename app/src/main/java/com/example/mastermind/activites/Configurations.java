@@ -88,7 +88,7 @@ public class Configurations extends AppCompatActivity implements View.OnClickLis
                 if (bouton == v) {
 
                     // Définir l'arrière-plan du bouton cliqué en vert
-                    drawable = getResources().getDrawable(R.drawable.bouton_rectangle_choix_vert);
+                    drawable = getResources().getDrawable(R.drawable.bouton_rectangle_choix_selectionne);
                     // Associer la valeur du bouton aux variables appropriées
                     String buttonText = bouton.getText().toString();
                     if (parentLayout.getId() == R.id.llCode) {
@@ -148,11 +148,11 @@ public class Configurations extends AppCompatActivity implements View.OnClickLis
 
         // Paramètres par défaut    replace hard code with String.valueOf(longueurCode) to have it adapt to the current value
         if (gridLayout.getId() == R.id.llCode && buttonText.equals(String.valueOf(longueurCode))) {
-            drawable = getResources().getDrawable(R.drawable.bouton_rectangle_choix_vert);
+            drawable = getResources().getDrawable(R.drawable.bouton_rectangle_choix_selectionne);
         } else if (gridLayout.getId() == R.id.llCouleurs && buttonText.equals(String.valueOf(nbCouleurs))) {
-            drawable = getResources().getDrawable(R.drawable.bouton_rectangle_choix_vert);
+            drawable = getResources().getDrawable(R.drawable.bouton_rectangle_choix_selectionne);
         } else if (gridLayout.getId() == R.id.llTentatives && buttonText.equals(String.valueOf(nbMaxDeTentative))) {
-            drawable = getResources().getDrawable(R.drawable.bouton_rectangle_choix_vert);
+            drawable = getResources().getDrawable(R.drawable.bouton_rectangle_choix_selectionne);
         } else {
             drawable = getResources().getDrawable(R.drawable.bouton_rectangle_choix);
         }

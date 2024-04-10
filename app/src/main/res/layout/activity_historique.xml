@@ -6,13 +6,14 @@
     android:id="@+id/svFondHistorique"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#333333">
+    android:background="@drawable/gradient_fond"
+    >
 
     <LinearLayout
         android:id="@+id/llfondHistorique"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#333333"
+        android:background="@drawable/gradient_fond"
         android:orientation="vertical"
         tools:context=".vue.Historique">
 

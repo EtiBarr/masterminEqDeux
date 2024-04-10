@@ -31,6 +31,7 @@ public class Jouer extends AppCompatActivity {
     private int nbCouleurs;
     private int nbMaxDeTentative;
     private GridLayout grille;
+    private LinearLayout lvCodeSecret;
     private LinearLayout lvCouleursDisponibles;
 
     @Override
@@ -62,14 +63,17 @@ public class Jouer extends AppCompatActivity {
         }
 
         System.out.println("nb couleurs = " + nbCouleurs);
-        //grille = findViewById(R.id.glJeu);
+        grille = findViewById(R.id.glJeu);
         lvCouleursDisponibles = findViewById(R.id.lvCouleursDisponibles);
+        lvCodeSecret = findViewById(R.id.lvCodeSecretJouer);
 
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    afficherCouleursDisponible(); // Call your method on the main thread
+                    afficherCouleursDisponible();
+                    afficherCodeSecret();
+                    afficherGrille();
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
                 } catch (IOException e) {
@@ -166,9 +170,94 @@ public class Jouer extends AppCompatActivity {
                 });
             }
         }).start();
+    }
+
+    public void afficherCodeSecret() throws JSONException, IOException {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                // Afficher les couleurs
+                for (int i = 0; i < longueurCode; i++) {
+                    final Button bouton = new Button(Jouer.this);
+                    bouton.setBackgroundResource(R.drawable.bouton_oval);
+
+                    final int couleurInt = Color.parseColor("#EAEAEA");
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            // Convertir de dp à px
+                            float scale = getResources().getDisplayMetrics().density;
+                            int widthInPixels = (int) (30 * scale + 0.5f);
+                            int heightInPixels = (int) (30 * scale + 0.5f);
+
+                            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                                    widthInPixels, heightInPixels  );
+                            layoutParams.setMargins(0, 0, 10, 0);
+                            bouton.setLayoutParams(layoutParams);
+                        //    bouton.getBackground().setTint(couleurInt);
+                            lvCodeSecret.addView(bouton);
+                        }
+                    });
+                }
+            }
+        }).start();
+    }
+
+    public void afficherGrille() throws JSONException, IOException {
 
         // Définir les variables pour le nombre de lignes et de colonnes
-        int nbColomnes = nbMaxDeTentative;
-        int nbLignes = longueurCode;
+        int nbLignes = nbMaxDeTentative;
+        int nbColomnes = longueurCode;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                grille.setColumnCount(nbColomnes);
+                grille.setRowCount(nbLignes);
+
+                grille.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        int availableWidth = grille.getWidth();
+                        int availableHeight = grille.getHeight();
+
+                        int buttonWidth = (availableWidth - (20 * (nbColomnes + 1))) / nbColomnes; // Subtract the total margin space
+                        int buttonHeight = (availableHeight - (20 * (nbLignes + 1))) / nbLignes; // Subtract the total margin space
+
+                        if (buttonHeight < buttonWidth) {
+                            buttonWidth = buttonHeight;
+                        }
+
+                        else {
+                            buttonHeight = buttonWidth;
+                        }
+
+                        for (int j = 0; j < nbLignes; j++) {
+                            for (int i = 0; i < nbColomnes; i++) {
+                                final Button bouton = new Button(Jouer.this);
+                                bouton.setBackgroundResource(R.drawable.bouton_oval);
+                                final int couleurInt = Color.parseColor("#EAEAEA");
+
+                                int finalButtonWidth = buttonWidth;
+                                int finalButtonHeight = buttonHeight;
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        GridLayout.LayoutParams layoutParams = new GridLayout.LayoutParams();
+                                        layoutParams.width = finalButtonWidth;
+                                        layoutParams.height = finalButtonHeight;
+                                        layoutParams.setMargins(20, 0, 20, 20);
+
+                                        bouton.setLayoutParams(layoutParams);
+                                        bouton.getBackground().setTint(couleurInt);
+                                        grille.addView(bouton);
+                                    }
+                                });
+                            }
+                        }
+                    }
+                });
+            }
+        }).start();
     }
 }
