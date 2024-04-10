@@ -1,5 +1,6 @@
 package com.example.mastermind.dao;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -43,4 +44,21 @@ public class bdSQLite extends SQLiteOpenHelper {
         // recréer la BD
         onCreate(db);
     }
+
+    public void ajouterPartie(String email, String codeSecret, int nombreDeCouleurs, String resultat, int nombreDeTentatives) {
+
+        ContentValues valeur = new ContentValues();
+        valeur.put(bdSQLite.COLONNE_EMAIL, email);
+        valeur.put(bdSQLite.COLONNE_CODE_SECRET, codeSecret);
+        valeur.put(bdSQLite.COLONNE_NOMBRE_DE_COULEURS, nombreDeCouleurs);
+        valeur.put(bdSQLite.COLONNE_RESULTAT, resultat);
+        valeur.put(bdSQLite.COLONNE_NOMBRE_DE_TENTATIVES, nombreDeTentatives);
+
+        SQLiteDatabase db = getWritableDatabase();
+
+        db.insert(TABLE_PARTIE, null, valeur);
+        db.close();
+
+    }
+
 }
