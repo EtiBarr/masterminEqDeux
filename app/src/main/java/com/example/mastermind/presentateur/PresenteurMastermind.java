@@ -43,21 +43,23 @@ public class PresenteurMastermind {
                             try {
                                 ((Jouer)activite).afficherCouleursDisponible();
                                 ((Jouer)activite).afficherCodeSecret();
-                                ((Jouer)activite).afficherGrille();
-                            } catch (JSONException e) {
-                                throw new RuntimeException(e);
-                            } catch (IOException e) {
+                                ((Jouer)activite).afficherGrille();                                ((Jouer)activite).afficherGrille();
+                                ((Jouer)activite).afficherTentative();
+
+                            } catch (JSONException | IOException e) {
                                 throw new RuntimeException(e);
                             }
                         }
                     });
-
                 } catch (Exception e){
                 e.printStackTrace();
                 }
             }
-
         }.start();
+    }
+
+    public void ajouterCouleur() {
+
     }
 
     public ArrayList<String> obtenirCouleurs() {

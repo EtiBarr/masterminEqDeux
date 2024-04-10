@@ -76,45 +76,11 @@ public class Jouer extends AppCompatActivity {
         lvTentatives = findViewById(R.id.lvTentative);
 
 
-    /*    runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    afficherCouleursDisponible();
-                    afficherCodeSecret();
-                    afficherGrille();
-                    afficherTentative(4);
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });*/
         presenteurMastermind = new PresenteurMastermind(this);
         presenteurMastermind.initializer(nbCouleurs);
 
-
-
-
-
     }
-/*
-    runOnUiThread(new Runnable() {
-        @Override
-        public void run() {
-            try {
-                afficherCouleursDisponible();
-                afficherCodeSecret();
-                afficherGrille();
-            } catch (JSONException e) {
-                throw new RuntimeException(e);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    });
-    */
+
 
     public void afficherCouleursDisponible() throws JSONException, IOException {
 
@@ -139,39 +105,40 @@ public class Jouer extends AppCompatActivity {
             layoutParams.setMargins(0, 0, 0, 10);
             boutonCouleur.setLayoutParams(layoutParams);
             lvCouleursDisponibles.addView(boutonCouleur);
-            }
+
+
+            // Ajouter un écouteur
+            boutonCouleur.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                     presenteurMastermind.ajouterCouleur();
+                }
+            });
+        }
     }
 
     public void afficherCodeSecret() throws JSONException, IOException {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                // Afficher les couleurs
-                for (int i = 0; i < longueurCode; i++) {
-                    final Button bouton = new Button(Jouer.this);
-                    bouton.setBackgroundResource(R.drawable.bouton_oval);
 
-                    final int couleurInt = Color.parseColor("#EAEAEA");
+        // Afficher les couleurs
+        for (int i = 0; i < longueurCode; i++) {
+            final Button bouton = new Button(Jouer.this);
+            bouton.setBackgroundResource(R.drawable.bouton_oval);
 
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            // Convertir de dp à px
-                            float scale = getResources().getDisplayMetrics().density;
-                            int widthInPixels = (int) (30 * scale + 0.5f);
-                            int heightInPixels = (int) (30 * scale + 0.5f);
+            final int couleurInt = Color.parseColor("#EAEAEA");
 
-                            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                                    widthInPixels, heightInPixels  );
-                            layoutParams.setMargins(0, 0, 10, 0);
-                            bouton.setLayoutParams(layoutParams);
-                        //    bouton.getBackground().setTint(couleurInt);
-                            lvCodeSecret.addView(bouton);
-                        }
-                    });
-                }
-            }
-        }).start();
+            // Convertir de dp à px
+            float scale = getResources().getDisplayMetrics().density;
+            int widthInPixels = (int) (30 * scale + 0.5f);
+            int heightInPixels = (int) (30 * scale + 0.5f);
+
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                    widthInPixels, heightInPixels  );
+            layoutParams.setMargins(0, 0, 10, 0);
+            bouton.setLayoutParams(layoutParams);
+            bouton.getBackground().setTint(couleurInt);
+            lvCodeSecret.addView(bouton);
+        }
     }
 
     public void afficherGrille() throws JSONException, IOException {
@@ -179,86 +146,73 @@ public class Jouer extends AppCompatActivity {
         // Définir les variables pour le nombre de lignes et de colonnes
         int nbLignes = nbMaxDeTentative;
         int nbColomnes = longueurCode;
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                grille.setColumnCount(nbColomnes);
-                grille.setRowCount(nbLignes);
 
-                grille.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        int availableWidth = grille.getWidth();
-                        int availableHeight = grille.getHeight();
+        System.out.println("nblignes : " + nbMaxDeTentative);
 
-                        int buttonWidth = (availableWidth - (20 * (nbColomnes + 1))) / nbColomnes; // Subtract the total margin space
-                        int buttonHeight = (availableHeight - (20 * (nbLignes + 1))) / nbLignes; // Subtract the total margin space
+        grille.setColumnCount(nbColomnes);
+        grille.setRowCount(nbLignes);
 
-                        if (buttonHeight < buttonWidth) {
-                            buttonWidth = buttonHeight;
-                        }
+        int availableWidth = grille.getWidth();
+        int availableHeight = grille.getHeight();
 
-                        else {
-                            buttonHeight = buttonWidth;
-                        }
+        int buttonWidth = (availableWidth - (20 * (nbColomnes))) / nbColomnes; // Subtract the total margin space
+        int buttonHeight = (availableHeight - (20 * (nbLignes))) / nbLignes; // Subtract the total margin space
 
-                        for (int j = 0; j < nbLignes; j++) {
-                            for (int i = 0; i < nbColomnes; i++) {
-                                final Button bouton = new Button(Jouer.this);
-                                bouton.setBackgroundResource(R.drawable.bouton_oval);
-                                final int couleurInt = Color.parseColor("#EAEAEA");
+        if (buttonHeight < buttonWidth) {
+            buttonWidth = buttonHeight;
+        }
 
-                                int finalButtonWidth = buttonWidth;
-                                int finalButtonHeight = buttonHeight;
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        GridLayout.LayoutParams layoutParams = new GridLayout.LayoutParams();
-                                        layoutParams.width = finalButtonWidth;
-                                        layoutParams.height = finalButtonHeight;
-                                        layoutParams.setMargins(20, 0, 20, 20);
+        else {
+            buttonHeight = buttonWidth;
+        }
 
-                                        bouton.setLayoutParams(layoutParams);
-                                        bouton.getBackground().setTint(couleurInt);
-                                        grille.addView(bouton);
-                                    }
-                                });
-                            }
-                        }
-                    }
-                });
+        for (int j = 0; j < nbLignes; j++) {
+            for (int i = 0; i < nbColomnes; i++) {
+                final Button bouton = new Button(Jouer.this);
+                bouton.setBackgroundResource(R.drawable.bouton_oval);
+                final int couleurInt = Color.parseColor("#EAEAEA");
+
+                int finalButtonWidth = buttonWidth;
+                int finalButtonHeight = buttonHeight;
+
+                GridLayout.LayoutParams layoutParams = new GridLayout.LayoutParams();
+                layoutParams.width = finalButtonWidth;
+                layoutParams.height = finalButtonHeight;
+                layoutParams.setMargins(20, 0, 0, 20);
+
+                bouton.setLayoutParams(layoutParams);
+                bouton.getBackground().setTint(couleurInt);
+                grille.addView(bouton);
             }
-        }).start();
+        }
     }
 
-    public void afficherTentative(int longueurCode) {
+    public void afficherTentative() {
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                for (int i = 0; i < longueurCode; i++) {
-                    Button bouton = new Button(Jouer.this);
+        for (int i = 0; i < longueurCode; i++) {
+            Button bouton = new Button(Jouer.this);
+            bouton.setBackgroundResource(R.drawable.bouton_oval);
 
-                    runOnUiThread(new Runnable() {
+            int availableWidth = lvTentatives.getWidth();
+            int availableHeigth = lvTentatives.getHeight();
 
-                        @Override
-                        public void run() {
+            int buttonWidth = (availableWidth - (20 * (longueurCode))) / longueurCode; // Subtract the total margin space
+            int buttonHeight = availableHeigth;
 
+            if (buttonHeight < buttonWidth) {
+                buttonWidth = buttonHeight;
+            }
 
-                            GridLayout.LayoutParams layoutParams = new GridLayout.LayoutParams();
+            else {
+                buttonHeight = buttonWidth;
+            }
+            GridLayout.LayoutParams layoutParams = new GridLayout.LayoutParams();
+            layoutParams.width = buttonWidth;
+            layoutParams.height = buttonHeight;
+            layoutParams.setMargins(0, 0, 20, 0);
 
-                            layoutParams.setMargins(20, 0, 20, 20);
-
-                            bouton.setLayoutParams(layoutParams);
-                          //  bouton.getBackground().setTint(couleurInt);
-                            lvTentatives.addView(bouton);
-                        }
-                    });
-                }}
-            }).start();
+            bouton.setLayoutParams(layoutParams);
+            lvTentatives.addView(bouton);
+        }
     }
-
-
-
-
 }
