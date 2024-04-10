@@ -63,8 +63,10 @@ public class HttpJsonService {
 
         OkHttpClient okHttpClient = new OkHttpClient();
 
+        String requete = "/stats?idCode=" + id;
+
         Request request = new Request.Builder()
-                .url(URL_POINT_ENTREE + "/stats?idCode=47")
+                .url(URL_POINT_ENTREE + requete)
                 .build();
 
         Response response = okHttpClient.newCall(request).execute();
@@ -91,7 +93,7 @@ public class HttpJsonService {
         }
     }
 
-    public ArrayList<String> obtenirCouleurs() throws IOException, JSONException {
+    public static ArrayList<String> obtenirCouleurs() throws IOException, JSONException {
 
         ArrayList<String> listeCouleurs = new ArrayList<>();
 
