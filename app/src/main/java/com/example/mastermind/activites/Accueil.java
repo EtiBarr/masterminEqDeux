@@ -102,20 +102,20 @@ public class Accueil extends AppCompatActivity implements View.OnClickListener {
     public void onClick(View v) {
         if (v == jouer) {
 
-            if (!courriel.getText().toString().isEmpty()) {
-                if(Patterns.EMAIL_ADDRESS.matcher(courriel.getText().toString().trim()).matches()) {
+           // if (!courriel.getText().toString().isEmpty()) {
+           //     if(Patterns.EMAIL_ADDRESS.matcher(courriel.getText().toString().trim()).matches()) {
                     Intent versJeu = new Intent(this, Jouer.class);
                     versJeu.putExtra("courriel", courriel.getText().toString());
                     versJeu.putExtra("longueurCode", longueurCode);
                     versJeu.putExtra("nbCouleurs", nbCouleurs);
                     versJeu.putExtra("nbMaxDeTentative", nbMaxDeTentative);
                     startActivity(versJeu);
-                }else{
-                    Toast.makeText(this, "Le format du courriel doit être valide", Toast.LENGTH_SHORT).show();
-                }
-            } else {
-                Toast.makeText(this, "Il faut include un courriel", Toast.LENGTH_SHORT).show();
-            }
+                //}else{
+               //     Toast.makeText(this, "Le format du courriel doit être valide", Toast.LENGTH_SHORT).show();
+              //  }
+            //} else {
+            //    Toast.makeText(this, "Il faut include un courriel", Toast.LENGTH_SHORT).show();
+           // }
 
         } else if (v == configurations) {
 

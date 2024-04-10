@@ -32,7 +32,7 @@ public class MastermindDao {
     }
 
     // Retourne les couleurs désirées
-    public static List<String> obtenirCouleurs(int nbCouleurs) throws JSONException, IOException {
+    public static ArrayList<String> obtenirCouleurs(int nbCouleurs) throws JSONException, IOException {
         ArrayList<String> couleurs = HttpJsonService.obtenirCouleurs();
         ArrayList<String> couleursChoisies = new ArrayList<>();
 

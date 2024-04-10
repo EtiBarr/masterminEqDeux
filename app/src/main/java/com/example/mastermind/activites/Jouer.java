@@ -1,9 +1,12 @@
 package com.example.mastermind.activites;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.GridLayout;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -13,6 +16,13 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.mastermind.R;
+import com.example.mastermind.dao.MastermindDao;
+import com.example.mastermind.modele.Mastermind;
+
+import org.json.JSONException;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class Jouer extends AppCompatActivity {
 
@@ -20,6 +30,8 @@ public class Jouer extends AppCompatActivity {
     private int longueurCode;
     private int nbCouleurs;
     private int nbMaxDeTentative;
+    private GridLayout grille;
+    private LinearLayout lvCouleursDisponibles;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,15 +57,29 @@ public class Jouer extends AppCompatActivity {
                     + "Nombre de Couleurs: " + nbCouleurs + "\n"
                     + "Nombre Max de Tentative: " + nbMaxDeTentative;
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-        }else {
+        } else {
             Toast.makeText(this, "Intent is null", Toast.LENGTH_SHORT).show();
         }
 
-        /*
-        // Définir les variables pour le nombre de lignes et de colonnes
-        int numRows = 10;
-        int numColumns = 4;
+        System.out.println("nb couleurs = " + nbCouleurs);
+        //grille = findViewById(R.id.glJeu);
+        lvCouleursDisponibles = findViewById(R.id.lvCouleursDisponibles);
 
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    afficherCouleursDisponible(); // Call your method on the main thread
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+
+/*
         // Tableau des couleurs au format RGB
         int[] colors = {
                 0xffff0000, // Rouge
@@ -93,8 +119,56 @@ public class Jouer extends AppCompatActivity {
 
                 grilleJeu.addView(bouton);
             }
-        }
+        }*/
 
-        */
+    }
+
+    public void afficherCouleursDisponible() throws JSONException, IOException {
+
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final ArrayList<String> couleurs;
+                try {
+                    couleurs = MastermindDao.obtenirCouleurs(nbCouleurs);
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        // Afficher les couleurs
+                        for (int i = couleurs.size()-1; i >= 0; i--) {
+                            Button boutonCouleur = new Button(Jouer.this);
+                            boutonCouleur.setBackgroundResource(R.drawable.bouton_rectangle);
+
+                            int couleurInt = Color.parseColor("#" + couleurs.get(i));
+                            boutonCouleur.getBackground().setTint(couleurInt);
+
+                            // Convertir de dp à px
+                            float scale = getResources().getDisplayMetrics().density;
+                            int widthInPixels = (int) (50 * scale + 0.5f);
+                            int heightInPixels = (int) (50 * scale + 0.5f);
+
+                            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                                    widthInPixels, heightInPixels
+                            );
+                            layoutParams.setMargins(0, 0, 0, 10);
+                            boutonCouleur.setLayoutParams(layoutParams);
+                            lvCouleursDisponibles.addView(boutonCouleur);
+                            }
+                    }
+                });
+            }
+        }).start();
+
+        // Définir les variables pour le nombre de lignes et de colonnes
+        int nbColomnes = nbMaxDeTentative;
+        int nbLignes = longueurCode;
     }
 }
