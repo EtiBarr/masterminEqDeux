@@ -45,7 +45,11 @@ public class Jouer extends AppCompatActivity implements View.OnClickListener {
     private Button btnConfirmer;
     private Button btnNouvellePartie;
     private Button btnAccueil;
+    private Button btnAbandon;
     private Mastermind partie;
+    private boolean partieTerminee = false;
+    private final int NB_NOUVELLE_PARTIE = 0;
+    private final int NB_ABANDON = 1;
 
 
     private PresenteurMastermind presenteurMastermind;
@@ -92,38 +96,60 @@ public class Jouer extends AppCompatActivity implements View.OnClickListener {
         btnAccueil = findViewById(R.id.bAccueilJ);
         btnAccueil.setOnClickListener(this);
 
+        btnAbandon = findViewById(R.id.btnAbandon);
+        btnAbandon.setOnClickListener(this);
 
         presenteurMastermind = new PresenteurMastermind(this);
         presenteurMastermind.initializer(nbCouleurs, longueurCode);
-
-
     }
 
     @Override
     public void onClick(View v) {
 
         if (v == btnConfirmer) {
-            presenteurMastermind.ajouterTentative();
+            if (!partieTerminee) {
+                presenteurMastermind.ajouterTentative();
+            }
         }
 
         else if (v == btnNouvellePartie) {
 
-            showConfirmationDialog("Vous allez perdre la partie en cours, êtes-vous sûr de vouloir continuer?");
+            if (partie.getNbTentatives() == 0 || partieTerminee) {
+                presenteurMastermind.initializer(nbCouleurs, longueurCode);
+            }
+
+            else {
+                showConfirmationDialog("Vous allez perdre la partie en cours, êtes-vous sûr de vouloir continuer?", NB_NOUVELLE_PARTIE);
+            }
         }
 
         else if (v == btnAccueil) {
             finish();
         }
 
+        else if (v == btnAbandon) {
+
+            if (!partieTerminee) {
+                showConfirmationDialog("Êtes-vous sûr de vouloir abandoner?", NB_ABANDON);
+            }
+        }
+
     }
 
-    private void showConfirmationDialog(String message) {
+    private void showConfirmationDialog(String message, int  operation) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(message)
                 .setPositiveButton("Oui", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        presenteurMastermind.initializer(nbCouleurs, longueurCode);
+
+                        if (operation == NB_NOUVELLE_PARTIE) {
+                            presenteurMastermind.initializer(nbCouleurs, longueurCode);
+                        }
+
+                        else if (operation == NB_ABANDON) {
+                            presenteurMastermind.abandoner();
+                        }
                     }
                 })
                 .setNegativeButton("Non", new DialogInterface.OnClickListener() {
@@ -167,7 +193,9 @@ public class Jouer extends AppCompatActivity implements View.OnClickListener {
             boutonCouleur.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                     presenteurMastermind.ajouterCouleur(couleurInt);
+                    if (!partieTerminee) {
+                        presenteurMastermind.ajouterCouleur(couleurInt);
+                    }
                 }
             });
         }
@@ -200,6 +228,8 @@ public class Jouer extends AppCompatActivity implements View.OnClickListener {
     }
 
     public void afficherGrille() throws JSONException, IOException {
+
+        partieTerminee = false;
 
         grille.removeAllViews();
 
@@ -430,8 +460,10 @@ public class Jouer extends AppCompatActivity implements View.OnClickListener {
 
 
     public void gagnerPartie() {
+
+        partieTerminee = true;
+
         partie = presenteurMastermind.getMastermind();
-        System.out.println("code partie = " +partie.getCode());
 
         for (int i = 0; i < longueurCode; i++) {
 
@@ -445,6 +477,9 @@ public class Jouer extends AppCompatActivity implements View.OnClickListener {
     }
 
     public void perdrePartie() {
+
+        partieTerminee = true;
+
         partie = presenteurMastermind.getMastermind();
         System.out.println("code partie = " +partie.getCode());
 
@@ -457,6 +492,21 @@ public class Jouer extends AppCompatActivity implements View.OnClickListener {
         }
         Toast.makeText(getApplicationContext(), "Vous avez perdu!", Toast.LENGTH_LONG).show();
 
+    }
+
+    public void abandoner() {
+
+        partieTerminee = true;
+
+        partie = presenteurMastermind.getMastermind();
+
+        for (int i = 0; i < longueurCode; i++) {
+
+            Button bouton = (Button) lvCodeSecret.getChildAt(i);
+            String couleur = partie.getCode().getCouleurAtPosition(i);
+
+            bouton.getBackground().setTint(Color.parseColor("#" + couleur));
+        }
     }
 
 

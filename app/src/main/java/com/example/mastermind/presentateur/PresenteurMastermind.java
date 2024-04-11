@@ -138,6 +138,24 @@ public class PresenteurMastermind {
         }.start();
     }
 
+    public void abandoner() {
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    ((Jouer)activite).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ((Jouer)activite).abandoner();
+                        }
+                    });
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+
     public ArrayList<String> obtenirCouleurs() {
         return modele.getCouleurs();
     }
