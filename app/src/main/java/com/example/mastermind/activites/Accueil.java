@@ -97,7 +97,7 @@ public class Accueil extends AppCompatActivity implements View.OnClickListener {
                 String message = "Longueur du code: " + longueurCode + "\n" +
                                 "Nombre de couleurs: " + nbCouleurs + "\n" +
                                 "Nombre maximal de tentatives: " + nbMaxDeTentative;
-                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
 
             } else if (resultCode == RESULT_CANCELED) {
 

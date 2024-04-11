@@ -17,7 +17,7 @@ import okhttp3.ResponseBody;
 
 public class HttpJsonService {
 
-    private static String URL_POINT_ENTREE = "http://10.0.2.2:3000";
+    private static String URL_POINT_ENTREE = "http://10.0.0.54:3000";
 
     public static ArrayList<Code> obtenirCodeSecret(int nbCouleurs) throws IOException, JSONException {
 

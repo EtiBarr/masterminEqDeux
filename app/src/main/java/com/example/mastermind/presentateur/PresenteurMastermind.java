@@ -36,23 +36,24 @@ public class PresenteurMastermind {
 
                     ArrayList<String> couleurs  = MastermindDao.obtenirCouleurs(nbCouleurs);
                     Code code = MastermindDao.obtenirCode(nbCouleurs, longueurCode);
+                    RecordCode record = MastermindDao.obtenirRecord(code);
 
                     modele.setCode(code);
                     modele.setCouleurs(couleurs);
+                    modele.setRecord(record);
 
                     Mastermind partie = new Mastermind(code);
                     modele.setMastermind(partie);
 
-                    System.out.println("ok new approach:  " + modele.getCode());
                     ((Jouer)activite).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             try {
                                 ((Jouer)activite).afficherCouleursDisponible();
                                 ((Jouer)activite).afficherCodeSecret();
-                                ((Jouer)activite).afficherGrille();                                ((Jouer)activite).afficherGrille();
+                                ((Jouer)activite).afficherGrille();
                                 ((Jouer)activite).afficherTentative();
-
+                                ((Jouer)activite).afficherRecord();
                             } catch (JSONException | IOException e) {
                                 throw new RuntimeException(e);
                             }
@@ -161,7 +162,10 @@ public class PresenteurMastermind {
     }
 
     public Mastermind getMastermind() {
-            System.out.print("ehhh   " + modele.getCode());
         return modele.getMastermind();
+    }
+
+    public RecordCode getRecord() {
+        return modele.getRecord();
     }
 }

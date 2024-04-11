@@ -27,8 +27,8 @@ public class MastermindDao {
     }
 
     // Retourne le record pour un code
-    public static RecordCode obtenirRecord(int id) throws JSONException, IOException {
-        return HttpJsonService.obtenirRecord(id);
+    public static RecordCode obtenirRecord(Code code) throws JSONException, IOException {
+        return HttpJsonService.obtenirRecord(code.getId());
     }
 
     // Retourne les couleurs désirées

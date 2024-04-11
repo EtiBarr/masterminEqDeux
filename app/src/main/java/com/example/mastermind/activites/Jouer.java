@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -46,6 +47,7 @@ public class Jouer extends AppCompatActivity implements View.OnClickListener {
     private Button btnNouvellePartie;
     private Button btnAccueil;
     private Button btnAbandon;
+    private TextView record;
     private Mastermind partie;
     private boolean partieTerminee = false;
     private final int NB_NOUVELLE_PARTIE = 0;
@@ -77,7 +79,7 @@ public class Jouer extends AppCompatActivity implements View.OnClickListener {
                     + "Longueur du Code: " + longueurCode + "\n"
                     + "Nombre de Couleurs: " + nbCouleurs + "\n"
                     + "Nombre Max de Tentative: " + nbMaxDeTentative;
-            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+          //  Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "Intent is null", Toast.LENGTH_SHORT).show();
         }
@@ -98,6 +100,8 @@ public class Jouer extends AppCompatActivity implements View.OnClickListener {
 
         btnAbandon = findViewById(R.id.btnAbandon);
         btnAbandon.setOnClickListener(this);
+
+        record = findViewById(R.id.tvRecord);
 
         presenteurMastermind = new PresenteurMastermind(this);
         presenteurMastermind.initializer(nbCouleurs, longueurCode);
@@ -355,6 +359,17 @@ public class Jouer extends AppCompatActivity implements View.OnClickListener {
                 }
             });
 
+        }
+    }
+
+    public void afficherRecord() {
+
+        if (presenteurMastermind.getRecord() != null) {
+            record.setText(presenteurMastermind.getRecord().toString());
+        }
+
+        else {
+            record.setText("Personne n'a encore trouvé ce code");
         }
     }
 
