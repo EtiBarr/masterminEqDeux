@@ -32,7 +32,7 @@ public class bdSQLite extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         // Création de la base de données "partie.db"
         String query = "CREATE TABLE " + TABLE_PARTIE + "("
-                        + COLONNE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                        + COLONNE_ID + " INTEGER,"
                         + COLONNE_EMAIL + " TEXT,"
                         + COLONNE_CODE_SECRET + " TEXT,"
                         + COLONNE_NOMBRE_DE_COULEURS + " INTEGER,"
@@ -51,9 +51,10 @@ public class bdSQLite extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void ajouterPartie(String email, String codeSecret, int nombreDeCouleurs, String resultat, int nombreDeTentatives) {
+    public void ajouterPartie(String email, String codeSecret, int nombreDeCouleurs, String resultat, int nombreDeTentatives, int id) {
 
         ContentValues valeur = new ContentValues();
+        valeur.put(bdSQLite.COLONNE_ID, id);
         valeur.put(bdSQLite.COLONNE_EMAIL, email);
         valeur.put(bdSQLite.COLONNE_CODE_SECRET, codeSecret);
         valeur.put(bdSQLite.COLONNE_NOMBRE_DE_COULEURS, nombreDeCouleurs);

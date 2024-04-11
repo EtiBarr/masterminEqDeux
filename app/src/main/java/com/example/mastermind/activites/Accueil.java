@@ -37,10 +37,6 @@ public class Accueil extends AppCompatActivity implements View.OnClickListener {
     private TextView historique;
     private EditText courriel;
 
-    private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NOM = "partie.db";
-    bdSQLite baseDeDonneeSQLite;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,8 +47,6 @@ public class Accueil extends AppCompatActivity implements View.OnClickListener {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
-        baseDeDonneeSQLite = new bdSQLite(this, DATABASE_NOM, null, DATABASE_VERSION);
 
         jouer = findViewById(R.id.tvJouerAccueil);
         jouer.setOnClickListener(this);

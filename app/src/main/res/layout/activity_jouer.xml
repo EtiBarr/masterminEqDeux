@@ -14,6 +14,8 @@
         android:id="@+id/llbPrincipauxJ"
         android:layout_width="match_parent"
         android:layout_height="60dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:elevation="25dp"
         android:gravity="center">
 
@@ -22,6 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginRight="10dp"
+            android:backgroundTint="#50C878"
             android:ems="11"
             android:text="Écran d'Accueil"
             app:cornerRadius="10dp" />
@@ -31,6 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
+            android:backgroundTint="#50C878"
             android:ems="11"
             android:text="Nouvelle partie"
             app:cornerRadius="10dp" />
@@ -38,12 +42,32 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/lvCodeSecretJouer"
-        android:layout_width="wrap_content"
+        android:id="@+id/llInfoEtCode"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        app:columnCount="4"
         android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/IBinfo"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="left"
+            android:layout_marginStart="20dp"
+            android:background="#00FFFFFF"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/info_icon" />
+
+        <LinearLayout
+            android:id="@+id/lvCodeSecretJouer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_marginRight="50dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:columnCount="4">
+
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -101,7 +125,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="28dp"
+            android:backgroundTint="#50C878"
             android:text="Confirmer"
+            app:cornerRadius="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.876"
@@ -113,7 +139,9 @@
             android:id="@+id/btnAbandon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="#50C878"
             android:text="Abandonner"
+            app:cornerRadius="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btnConfirmer"
             app:layout_constraintHorizontal_bias="0.21"
@@ -125,27 +153,29 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="56dp"
             android:text="Record:"
             android:textColor="#FFFFFF"
             android:textSize="20sp"
             app:layout_constraintBottom_toTopOf="@+id/btnAbandon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/lvTentative"
-            app:layout_constraintVertical_bias="0.586" />
+            app:layout_constraintVertical_bias="0.6" />
 
         <TextView
             android:id="@+id/tvRecord"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="161dp"
+            android:layout_height="30dp"
+            android:ems="10"
             android:textColor="#FFFFFF"
             android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/btnConfirmer"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.146"
+            app:layout_constraintHorizontal_bias="0.155"
             app:layout_constraintStart_toEndOf="@+id/textView"
             app:layout_constraintTop_toBottomOf="@+id/lvTentative"
-            app:layout_constraintVertical_bias="0.217" />
+            app:layout_constraintVertical_bias="0.574" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

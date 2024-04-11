@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +23,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.mastermind.R;
 import com.example.mastermind.dao.MastermindDao;
+import com.example.mastermind.dao.bdSQLite;
 import com.example.mastermind.modele.Code;
 import com.example.mastermind.modele.Feedback;
 import com.example.mastermind.modele.Mastermind;
@@ -47,11 +49,15 @@ public class Jouer extends AppCompatActivity implements View.OnClickListener {
     private Button btnNouvellePartie;
     private Button btnAccueil;
     private Button btnAbandon;
+    private ImageButton btnInfo;
     private TextView record;
     private Mastermind partie;
     private boolean partieTerminee = false;
     private final int NB_NOUVELLE_PARTIE = 0;
     private final int NB_ABANDON = 1;
+    private static final int DATABASE_VERSION = 1;
+    private static final String DATABASE_NOM = "partie.db";
+    private bdSQLite baseDeDonneeSQLite;
 
 
     private PresenteurMastermind presenteurMastermind;
@@ -101,6 +107,10 @@ public class Jouer extends AppCompatActivity implements View.OnClickListener {
         btnAbandon = findViewById(R.id.btnAbandon);
         btnAbandon.setOnClickListener(this);
 
+        btnInfo = findViewById(R.id.IBinfo);
+        btnInfo.setOnClickListener(this);
+
+
         record = findViewById(R.id.tvRecord);
 
         presenteurMastermind = new PresenteurMastermind(this);
@@ -138,6 +148,19 @@ public class Jouer extends AppCompatActivity implements View.OnClickListener {
             }
         }
 
+        else if (v == btnInfo) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Un cercle noir indique que vous avez correctement placé une couleur, tandis qu'un cercle blanc indique une bonne couleur à la mauvaise position.")
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                        }
+                    });
+
+// Create the AlertDialog
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
     }
 
     private void showConfirmationDialog(String message, int  operation) {
@@ -446,14 +469,12 @@ public class Jouer extends AppCompatActivity implements View.OnClickListener {
 
             for (int i = 0; i < nouveauFeedback.getCouleurPosition(); i++) {
                 Button feedbackBouton = (Button) grilleFeedback.getChildAt(i);
-                feedbackBouton.getBackground().setTint(Color.WHITE);
-
+                feedbackBouton.getBackground().setTint(Color.BLACK);
             }
 
             for (int i = 0; i < nouveauFeedback.getCouleur(); i++) {
                 Button feedbackBouton = (Button) grilleFeedback.getChildAt(nouveauFeedback.getCouleurPosition() + i);
-                feedbackBouton.getBackground().setTint(Color.BLACK);
-
+                feedbackBouton.getBackground().setTint(Color.WHITE);
             }
 
             // Update Mastermind
@@ -476,6 +497,8 @@ public class Jouer extends AppCompatActivity implements View.OnClickListener {
 
     public void gagnerPartie() {
 
+        envoyerDonneesPartie("Gagné");
+
         partieTerminee = true;
 
         partie = presenteurMastermind.getMastermind();
@@ -488,10 +511,11 @@ public class Jouer extends AppCompatActivity implements View.OnClickListener {
             bouton.getBackground().setTint(Color.parseColor("#" + couleur));
         }
         Toast.makeText(getApplicationContext(), "Félicitations! Vous avez gagné", Toast.LENGTH_LONG).show();
-
     }
 
     public void perdrePartie() {
+
+        envoyerDonneesPartie("Perdu");
 
         partieTerminee = true;
 
@@ -506,10 +530,10 @@ public class Jouer extends AppCompatActivity implements View.OnClickListener {
             bouton.getBackground().setTint(Color.parseColor("#" + couleur));
         }
         Toast.makeText(getApplicationContext(), "Vous avez perdu!", Toast.LENGTH_LONG).show();
-
     }
 
     public void abandoner() {
+        envoyerDonneesPartie("Abandon");
 
         partieTerminee = true;
 
@@ -523,6 +547,17 @@ public class Jouer extends AppCompatActivity implements View.OnClickListener {
             bouton.getBackground().setTint(Color.parseColor("#" + couleur));
         }
     }
+
+    public void envoyerDonneesPartie(String message) {
+
+        System.out.println(partie.getCode().afficherCouleurs());
+        baseDeDonneeSQLite = new bdSQLite(this, DATABASE_NOM, null, DATABASE_VERSION);
+
+
+        baseDeDonneeSQLite.ajouterPartie(courriel, partie.getCode().afficherCouleurs(), nbCouleurs, message, partie.getNbTentatives(),partie.getCode().getId());
+    }
+
+
 
 
 

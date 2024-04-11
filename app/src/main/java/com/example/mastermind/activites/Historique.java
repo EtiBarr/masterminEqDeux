@@ -9,17 +9,19 @@ import android.widget.SimpleAdapter;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.mastermind.R;
+import com.example.mastermind.dao.bdSQLite;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class Historique extends AppCompatActivity implements View.OnClickListener {
     private Button revenir;
     private ListView lvPartiesH;
     private SimpleAdapter adaptateur;
-    private List<Map<String, String>> listeParties;
+    private ArrayList<HashMap<String, String>> listeParties;
+    private static final int DATABASE_VERSION = 1;
+    private static final String DATABASE_NOM = "partie.db";
+    private bdSQLite baseDeDonneeSQLite;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +35,19 @@ public class Historique extends AppCompatActivity implements View.OnClickListene
         lvPartiesH = findViewById(R.id.lvPartiesH);
         listeParties = new ArrayList<>();
 
-        // Ajouter des données d'exemple
-        creerNouvellePartie();
-        creerNouvellePartie();
+        baseDeDonneeSQLite = new bdSQLite(this, DATABASE_NOM, null, DATABASE_VERSION);
+        ArrayList<HashMap<String, String>> liste = baseDeDonneeSQLite.retournerListePartie();
+
+       for (int i = 0; i < liste.size(); i++) {
+
+            String courriel = liste.get(i).get("Email");
+            String code = liste.get(i).get("Code secret");
+            String couleurs = liste.get(i).get("nombre de couleurs");
+            String resultat = liste.get(i).get("Resultat");
+            String tentatives = "test";
+
+            creerNouvellePartie(courriel, code, couleurs, resultat, tentatives);
+        }
 
         // Créer les données nécessaires
         String[] donnees = {"courriel", "courrielInput",
@@ -63,24 +75,23 @@ public class Historique extends AppCompatActivity implements View.OnClickListene
         }
     }
 
-    private void creerNouvellePartie() {
+    private void creerNouvellePartie(String courriel, String code, String couleurs, String resultat, String tentatives) {
         // Créer une nouvelle partie (données)
-        Map<String, String> partieData = new HashMap<>();
+        HashMap<String, String> partieData = new HashMap<>();
         partieData.put("courriel", "Le courriel du joueur");
-        partieData.put("courrielInput", "example@adresse.courriel");
+        partieData.put("courrielInput", courriel);
 
         partieData.put("code", "Le code secret");
-        partieData.put("codeInput", "4");
+        partieData.put("codeInput", code);
 
         partieData.put("couleurs", "Le nombre de couleurs");
-        partieData.put("couleursInput", "8");
+        partieData.put("couleursInput", couleurs);
 
         partieData.put("resultat", "Le résultat de la partie");
-        partieData.put("resultatInput", "Réussie");
+        partieData.put("resultatInput", resultat);
 
         partieData.put("tentatives", "Le nombre de tentatives");
-        partieData.put("tentativesInput", "10");
-
+        partieData.put("tentativesInput", tentatives);
 
         // Ajouter la partie à la liste
         listeParties.add(partieData);

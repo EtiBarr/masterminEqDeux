@@ -44,5 +44,41 @@ public class Code {
         return "id = " + this.getId() + "\tnbCouleurs = " + this.getLongueurCode() + "\tCode = " + this.getCouleurs() + "\n";
     }
 
+    public String afficherCouleurs() {
+
+        String couleursCode = "";
+        for (int i = 0; i < this.longueurCode; i++) {
+
+            switch (couleurs.get(i)) {
+                case "ffff0000":
+                    couleursCode += "Rouge, ";
+                    break;
+                case "ff00ff00":
+                    couleursCode += "Vert, ";
+                    break;
+                case "ff0000ff":
+                    couleursCode += "Bleu, ";
+                    break;
+                case "ffffff00":
+                    couleursCode += "Jaune, ";
+                    break;
+                case "ffff00ff":
+                    couleursCode += "Magenta, ";
+                    break;
+                case "ffffa500":
+                    couleursCode += "Orange,  ";
+                    break;
+                case "ff000000":
+                    couleursCode += "Noir, ";
+                    break;
+                case "ffffffff":
+                    couleursCode += "Blanc, ";
+                    break;
+            }
+        }
+
+        return couleursCode;
+    }
+
 
 }
