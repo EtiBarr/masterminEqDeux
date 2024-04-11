@@ -37,4 +37,8 @@ public class Mastermind {
     public ArrayList<ArrayList<String>> getTentatives() {
         return tentatives;
     }
+
+    public int getNbTentatives() {
+        return nbTentatives;
+    }
 }

@@ -102,6 +102,42 @@ public class PresenteurMastermind {
         }.start();
     }
 
+    public void gagnerPartie() {
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    ((Jouer)activite).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ((Jouer)activite).gagnerPartie();
+                        }
+                    });
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+
+    public void perdrePartie() {
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    ((Jouer)activite).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ((Jouer)activite).perdrePartie();
+                        }
+                    });
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+
     public ArrayList<String> obtenirCouleurs() {
         return modele.getCouleurs();
     }

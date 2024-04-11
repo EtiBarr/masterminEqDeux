@@ -19,6 +19,8 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.mastermind.R;
 import com.example.mastermind.dao.MastermindDao;
+import com.example.mastermind.modele.Code;
+import com.example.mastermind.modele.Feedback;
 import com.example.mastermind.modele.Mastermind;
 import com.example.mastermind.presentateur.PresenteurMastermind;
 
@@ -158,18 +160,7 @@ public class Jouer extends AppCompatActivity implements View.OnClickListener {
 
     public void afficherGrille() throws JSONException, IOException {
 
-        /** Temporary **/
         partie = presenteurMastermind.getMastermind();
-        System.out.println("code partie = " +partie.getCode());
-
-        for (int i = 0; i < longueurCode; i++) {
-
-            Button bouton = (Button) lvCodeSecret.getChildAt(i);
-            String couleur = partie.getCode().getCouleurAtPosition(i);
-
-            bouton.getBackground().setTint(Color.parseColor("#" + couleur));
-        }
-
 
         // Définir les variables pour le nombre de lignes et de colonnes
         int nbLignes = nbMaxDeTentative;
@@ -223,7 +214,7 @@ public class Jouer extends AppCompatActivity implements View.OnClickListener {
             GridLayout.LayoutParams layoutParamsFeedback = new GridLayout.LayoutParams();
             layoutParamsFeedback.width = buttonWidth;
             layoutParamsFeedback.height = buttonHeight;
-            layoutParamsFeedback.setMargins(30, 0, 0, 0);
+            layoutParamsFeedback.setMargins(20, 0, 0, 0);
 
             grilleFeedback.setLayoutParams(layoutParamsFeedback);
 
@@ -314,6 +305,8 @@ public class Jouer extends AppCompatActivity implements View.OnClickListener {
 
     public void ajouterTentative() {
 
+        ArrayList<String> nouvelleTentative = new ArrayList<>();
+
         boolean tentativeRemplie = true;
         for (int i = 0; i < lvTentatives.getChildCount(); i++) {
 
@@ -341,19 +334,84 @@ public class Jouer extends AppCompatActivity implements View.OnClickListener {
                 Button bouton = (Button) lvTentatives.getChildAt(i);
                 int couleurBouton = (int) bouton.getTag();
 
-                Button boutonGrille = (Button) grille.getChildAt(index + i);
+                Button boutonGrille = (Button) grille.getChildAt(index);
                 boutonGrille.getBackground().setTint(couleurBouton);
                 boutonGrille.setTag(couleurBouton);
 
                 // Réinitialiser la tentative
                 bouton.setTag(Color.GRAY);
                 bouton.getBackground().setTint(Color.GRAY);
+
+                String couleurString = Integer.toHexString(couleurBouton);
+
+                nouvelleTentative.add(couleurString);
+                index++;
+            }
+
+            // Création d'un feedback
+            Code codeTentative = new Code(longueurCode, 0, nouvelleTentative);
+            Feedback nouveauFeedback = new Feedback(codeTentative, partie.getCode());
+
+            GridLayout grilleFeedback = (GridLayout) grille.getChildAt(index);
+
+            for (int i = 0; i < nouveauFeedback.getCouleurPosition(); i++) {
+                Button feedbackBouton = (Button) grilleFeedback.getChildAt(i);
+                feedbackBouton.getBackground().setTint(Color.WHITE);
+
+            }
+
+            for (int i = 0; i < nouveauFeedback.getCouleur(); i++) {
+                Button feedbackBouton = (Button) grilleFeedback.getChildAt(nouveauFeedback.getCouleurPosition() + i);
+                feedbackBouton.getBackground().setTint(Color.BLACK);
+
+            }
+
+            // Update Mastermind
+            partie.ajouterTentative(nouvelleTentative, nouveauFeedback);
+
+            if (nouveauFeedback.getCouleurPosition() == longueurCode) {
+                presenteurMastermind.gagnerPartie();
+            }
+
+            else if (partie.getNbTentatives() == nbMaxDeTentative) {
+                presenteurMastermind.perdrePartie();
             }
         }
 
         else {
             Toast.makeText(getApplicationContext(), "Vous devez remplir la tentative", Toast.LENGTH_SHORT).show();
         }
+    }
+
+
+    public void gagnerPartie() {
+        partie = presenteurMastermind.getMastermind();
+        System.out.println("code partie = " +partie.getCode());
+
+        for (int i = 0; i < longueurCode; i++) {
+
+            Button bouton = (Button) lvCodeSecret.getChildAt(i);
+            String couleur = partie.getCode().getCouleurAtPosition(i);
+
+            bouton.getBackground().setTint(Color.parseColor("#" + couleur));
+        }
+        Toast.makeText(getApplicationContext(), "Félicitations! Vous avez gagné", Toast.LENGTH_LONG).show();
+
+    }
+
+    public void perdrePartie() {
+        partie = presenteurMastermind.getMastermind();
+        System.out.println("code partie = " +partie.getCode());
+
+        for (int i = 0; i < longueurCode; i++) {
+
+            Button bouton = (Button) lvCodeSecret.getChildAt(i);
+            String couleur = partie.getCode().getCouleurAtPosition(i);
+
+            bouton.getBackground().setTint(Color.parseColor("#" + couleur));
+        }
+        Toast.makeText(getApplicationContext(), "Vous avez perdu!", Toast.LENGTH_LONG).show();
+
     }
 
 
