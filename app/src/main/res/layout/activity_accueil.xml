@@ -87,18 +87,6 @@
             android:textColor="#FFFFFF"
             android:textColorHint="@color/white" />
 
-        <Button
-            android:id="@+id/btnConfirmerAccueil"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="80dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="80dp"
-            android:layout_marginBottom="0dp"
-            android:layout_weight="1"
-            android:backgroundTint="#50C878"
-            android:text="@string/confirmer"
-            app:cornerRadius="5dp" />
     </LinearLayout>
 
     <TextView

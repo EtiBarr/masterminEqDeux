@@ -1,5 +1,6 @@
 package com.example.mastermind.activites;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -12,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -41,6 +43,8 @@ public class Jouer extends AppCompatActivity implements View.OnClickListener {
 
     private LinearLayout lvTentatives;
     private Button btnConfirmer;
+    private Button btnNouvellePartie;
+    private Button btnAccueil;
     private Mastermind partie;
 
 
@@ -74,13 +78,19 @@ public class Jouer extends AppCompatActivity implements View.OnClickListener {
             Toast.makeText(this, "Intent is null", Toast.LENGTH_SHORT).show();
         }
 
-        System.out.println("nb couleurs = " + nbCouleurs);
         grille = findViewById(R.id.glJeu);
         lvCouleursDisponibles = findViewById(R.id.lvCouleursDisponibles);
         lvCodeSecret = findViewById(R.id.lvCodeSecretJouer);
         lvTentatives = findViewById(R.id.lvTentative);
+
         btnConfirmer = findViewById(R.id.btnConfirmer);
         btnConfirmer.setOnClickListener(this);
+
+        btnNouvellePartie = findViewById(R.id.btnNouvellePartie);
+        btnNouvellePartie.setOnClickListener(this);
+
+        btnAccueil = findViewById(R.id.bAccueilJ);
+        btnAccueil.setOnClickListener(this);
 
 
         presenteurMastermind = new PresenteurMastermind(this);
@@ -96,10 +106,38 @@ public class Jouer extends AppCompatActivity implements View.OnClickListener {
             presenteurMastermind.ajouterTentative();
         }
 
+        else if (v == btnNouvellePartie) {
+
+            showConfirmationDialog("Vous allez perdre la partie en cours, êtes-vous sûr de vouloir continuer?");
+        }
+
+        else if (v == btnAccueil) {
+            finish();
+        }
+
+    }
+
+    private void showConfirmationDialog(String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(message)
+                .setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        presenteurMastermind.initializer(nbCouleurs, longueurCode);
+                    }
+                })
+                .setNegativeButton("Non", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    }
+                })
+                .show();
     }
 
 
     public void afficherCouleursDisponible() throws JSONException, IOException {
+
+        lvCouleursDisponibles.removeAllViews();
 
         ArrayList<String> couleurs = presenteurMastermind.obtenirCouleurs();
 
@@ -137,6 +175,9 @@ public class Jouer extends AppCompatActivity implements View.OnClickListener {
 
     public void afficherCodeSecret() throws JSONException, IOException {
 
+
+        lvCodeSecret.removeAllViews();
+
         // Afficher les couleurs
         for (int i = 0; i < longueurCode; i++) {
             final Button bouton = new Button(Jouer.this);
@@ -159,6 +200,8 @@ public class Jouer extends AppCompatActivity implements View.OnClickListener {
     }
 
     public void afficherGrille() throws JSONException, IOException {
+
+        grille.removeAllViews();
 
         partie = presenteurMastermind.getMastermind();
 
@@ -243,6 +286,8 @@ public class Jouer extends AppCompatActivity implements View.OnClickListener {
     }
 
     public void afficherTentative() {
+
+        lvTentatives.removeAllViews();
 
         for (int i = 0; i < longueurCode; i++) {
             Button bouton = new Button(Jouer.this);

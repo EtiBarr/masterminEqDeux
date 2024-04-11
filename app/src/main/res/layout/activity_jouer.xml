@@ -27,12 +27,12 @@
             app:cornerRadius="10dp" />
 
         <Button
-            android:id="@+id/bRecordJ"
+            android:id="@+id/btnNouvellePartie"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
             android:ems="11"
-            android:text="Meilleur record"
+            android:text="Nouvelle partie"
             app:cornerRadius="10dp" />
 
     </LinearLayout>
