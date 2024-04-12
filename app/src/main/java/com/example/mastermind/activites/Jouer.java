@@ -237,7 +237,6 @@ public class Jouer extends AppCompatActivity implements View.OnClickListener {
             final Button bouton = new Button(Jouer.this);
             bouton.setBackgroundResource(R.drawable.bouton_oval);
 
-            final int couleurInt = Color.parseColor("#EAEAEA");
 
             // Convertir de dp à px
             float scale = getResources().getDisplayMetrics().density;
@@ -248,7 +247,7 @@ public class Jouer extends AppCompatActivity implements View.OnClickListener {
                     widthInPixels, heightInPixels  );
             layoutParams.setMargins(0, 0, 10, 0);
             bouton.setLayoutParams(layoutParams);
-            bouton.getBackground().setTint(couleurInt);
+            bouton.getBackground().setTint(Color.GRAY);
             lvCodeSecret.addView(bouton);
         }
     }
@@ -260,6 +259,11 @@ public class Jouer extends AppCompatActivity implements View.OnClickListener {
         grille.removeAllViews();
 
         partie = presenteurMastermind.getMastermind();
+
+        int marge = 20;
+        if (longueurCode == 6) {
+            marge = 10;
+        }
 
         // Définir les variables pour le nombre de lignes et de colonnes
         int nbLignes = nbMaxDeTentative;
@@ -297,7 +301,7 @@ public class Jouer extends AppCompatActivity implements View.OnClickListener {
                 GridLayout.LayoutParams layoutParams = new GridLayout.LayoutParams();
                 layoutParams.width = finalButtonWidth;
                 layoutParams.height = finalButtonHeight;
-                layoutParams.setMargins(20, 0, 0, 20);
+                layoutParams.setMargins(marge, 0, 0, marge);
 
                 bouton.setLayoutParams(layoutParams);
                 bouton.getBackground().setTint(couleurInt);
@@ -308,12 +312,13 @@ public class Jouer extends AppCompatActivity implements View.OnClickListener {
             // La dernière colomne est pour un feedback
             GridLayout grilleFeedback = new GridLayout(this);
             grilleFeedback.setRowCount(longueurCode / 2);
-            grilleFeedback.setColumnCount(longueurCode / 2);
+            grilleFeedback.setColumnCount((int) Math.ceil((double) longueurCode / 2));
 
+            System.out.println("la grille fait  " + grilleFeedback.getColumnCount());
             GridLayout.LayoutParams layoutParamsFeedback = new GridLayout.LayoutParams();
             layoutParamsFeedback.width = buttonWidth;
             layoutParamsFeedback.height = buttonHeight;
-            layoutParamsFeedback.setMargins(20, 0, 0, 0);
+            layoutParamsFeedback.setMargins(marge, 0, 0, 0);
 
             grilleFeedback.setLayoutParams(layoutParamsFeedback);
 
@@ -323,8 +328,16 @@ public class Jouer extends AppCompatActivity implements View.OnClickListener {
                 boutonFeedback.setBackgroundResource(R.drawable.bouton_oval);
                 final int couleurInt = Color.GRAY;
 
-                int largeurFeedback = buttonWidth / 2;
+                int largeurFeedback = buttonWidth / grilleFeedback.getColumnCount();
                 int hauteurFeedback = buttonHeight / 2;
+
+                if (largeurFeedback < hauteurFeedback) {
+                    hauteurFeedback = largeurFeedback;
+                }
+
+                else if (hauteurFeedback < largeurFeedback) {
+                    largeurFeedback = hauteurFeedback;
+                }
 
                 GridLayout.LayoutParams layoutParamsBoutonFeedback = new GridLayout.LayoutParams();
                 layoutParamsBoutonFeedback.width = largeurFeedback;
