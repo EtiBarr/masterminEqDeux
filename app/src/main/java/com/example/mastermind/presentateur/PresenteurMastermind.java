@@ -45,6 +45,10 @@ public class PresenteurMastermind {
                     Mastermind partie = new Mastermind(code);
                     modele.setMastermind(partie);
 
+                    // Chercher l'id de la dernière stats
+                    int dernierId = MastermindDao.obtenirDernierId();
+                    modele.setProchainIdRecord(dernierId + 1);
+
                     ((Jouer)activite).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -111,7 +115,13 @@ public class PresenteurMastermind {
                     ((Jouer)activite).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            ((Jouer)activite).gagnerPartie();
+                            try {
+                                ((Jouer)activite).gagnerPartie();
+                            } catch (JSONException e) {
+                                throw new RuntimeException(e);
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
                         }
                     });
                 } catch (Exception e){
@@ -157,6 +167,38 @@ public class PresenteurMastermind {
         }.start();
     }
 
+    public void creerRecord(int id, int nbTentatives, String courriel, int idStat) {
+
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    MastermindDao.creerRecord(id, nbTentatives, courriel, idStat);
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }.start();
+    }
+
+    public void changerRecord(int id, int nbTentatives, String courriel) {
+
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    MastermindDao.changerRecord(id, nbTentatives, courriel);
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }.start();
+    }
+
     public ArrayList<String> obtenirCouleurs() {
         return modele.getCouleurs();
     }
@@ -167,5 +209,9 @@ public class PresenteurMastermind {
 
     public RecordCode getRecord() {
         return modele.getRecord();
+    }
+
+    public int getIdStat() {
+        return modele.getProchainIdRecord();
     }
 }

@@ -8,6 +8,7 @@ public class Modele {
     private RecordCode record;
     private Code code;
     private Mastermind partie;
+    private int prochainIdRecord;
 
     public Code getCode() {
         return code;
@@ -40,4 +41,13 @@ public class Modele {
     public void setCode(Code code) {
         this.code = code;
     }
+
+    public void setProchainIdRecord(int prochainIdRecord) {
+        this.prochainIdRecord = prochainIdRecord;
+    }
+
+    public int getProchainIdRecord() {
+        return prochainIdRecord;
+    }
 }
+

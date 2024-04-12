@@ -1,5 +1,8 @@
 package com.example.mastermind.dao;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.example.mastermind.modele.Code;
 import com.example.mastermind.modele.RecordCode;
 
@@ -10,10 +13,13 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+import okio.BufferedSink;
 
 public class HttpJsonService {
 
@@ -115,6 +121,74 @@ public class HttpJsonService {
 
         return listeCouleurs;
     }
+
+    public static int obtenirDernierId() throws IOException, JSONException {
+
+        OkHttpClient okHttpClient = new OkHttpClient();
+
+        Request request = new Request.Builder()
+                .url(URL_POINT_ENTREE + "/stats")
+                .build();
+
+        Response response = okHttpClient.newCall(request).execute();
+        ResponseBody responseBody = response.body();
+
+        JSONArray jsonArray = new JSONArray(responseBody.string());
+
+        return jsonArray.length();
+    }
+
+    public static void creerRecord(int id, int nbTentatives, String courriel, int idStat) throws JSONException, IOException {
+
+        OkHttpClient okHttpClient = new OkHttpClient();
+
+        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+
+        // Données POST
+        JSONObject obj = new JSONObject();
+        obj.put("idCode", String.valueOf(id));
+        obj.put("record", String.valueOf(nbTentatives));
+        obj.put("courriel", courriel);
+        obj.put("id", idStat);
+
+        RequestBody corpsRequete = RequestBody.create(obj.toString(), JSON);
+
+        // Executer la requête
+        Request request = new Request.Builder()
+                .url(URL_POINT_ENTREE + "/stats")
+                .post(corpsRequete)
+                .addHeader("Content-Type", "application/json")
+                .build();
+
+        Response response = okHttpClient.newCall(request).execute();
+        ResponseBody responseBody = response.body();
+    }
+
+    public static void changerRecord(int id, int nbTentatives, String courriel) throws JSONException, IOException {
+
+        OkHttpClient okHttpClient = new OkHttpClient();
+
+        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+
+        // Données POST
+        JSONObject obj = new JSONObject();
+        obj.put("record", String.valueOf(nbTentatives));
+        obj.put("courriel", courriel);
+
+        RequestBody corpsRequete = RequestBody.create(obj.toString(), JSON);
+
+        // Executer la requête
+        Request request = new Request.Builder()
+                .url(URL_POINT_ENTREE + "/stats" + id)
+                .put(corpsRequete)
+                .addHeader("Content-Type", "application/json")
+                .build();
+
+        Response response = okHttpClient.newCall(request).execute();
+        ResponseBody responseBody = response.body();
+    }
+
+
 
 
 

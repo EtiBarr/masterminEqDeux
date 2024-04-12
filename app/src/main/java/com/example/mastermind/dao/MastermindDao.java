@@ -42,4 +42,18 @@ public class MastermindDao {
 
         return couleursChoisies;
     }
+
+    public static int obtenirDernierId() throws JSONException, IOException {
+        return HttpJsonService.obtenirDernierId();
+    }
+
+    public static void creerRecord(int id, int nbTentatives, String courriel, int idStat) throws JSONException, IOException {
+
+        HttpJsonService.creerRecord(id, nbTentatives, courriel, idStat);
+    }
+
+    public static void changerRecord(int id, int nbTentatives, String courriel) throws JSONException, IOException {
+
+        HttpJsonService.changerRecord(id, nbTentatives, courriel);
+    }
 }

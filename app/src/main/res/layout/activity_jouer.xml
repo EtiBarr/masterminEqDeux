@@ -115,10 +115,10 @@
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.027" />
+            app:layout_constraintVertical_bias="0.208" />
 
         <Button
             android:id="@+id/btnConfirmer"
@@ -165,8 +165,8 @@
 
         <TextView
             android:id="@+id/tvRecord"
-            android:layout_width="161dp"
-            android:layout_height="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="46dp"
             android:ems="10"
             android:textColor="#FFFFFF"
             android:textSize="14sp"

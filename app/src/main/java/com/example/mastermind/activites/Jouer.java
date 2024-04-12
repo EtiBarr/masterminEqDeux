@@ -27,6 +27,7 @@ import com.example.mastermind.dao.bdSQLite;
 import com.example.mastermind.modele.Code;
 import com.example.mastermind.modele.Feedback;
 import com.example.mastermind.modele.Mastermind;
+import com.example.mastermind.modele.RecordCode;
 import com.example.mastermind.presentateur.PresenteurMastermind;
 
 import org.json.JSONException;
@@ -156,8 +157,6 @@ public class Jouer extends AppCompatActivity implements View.OnClickListener {
                             dialog.dismiss();
                         }
                     });
-
-// Create the AlertDialog
             AlertDialog dialog = builder.create();
             dialog.show();
         }
@@ -495,9 +494,10 @@ public class Jouer extends AppCompatActivity implements View.OnClickListener {
     }
 
 
-    public void gagnerPartie() {
+    public void gagnerPartie() throws JSONException, IOException {
 
         envoyerDonneesPartie("Gagné");
+        comparerRecord(partie.getNbTentatives(), partie.getCode().getId());
 
         partieTerminee = true;
 
@@ -555,6 +555,19 @@ public class Jouer extends AppCompatActivity implements View.OnClickListener {
 
 
         baseDeDonneeSQLite.ajouterPartie(courriel, partie.getCode().afficherCouleurs(), nbCouleurs, message, partie.getNbTentatives(),partie.getCode().getId());
+    }
+
+    public void comparerRecord(int id, int nbTentatives) throws JSONException, IOException {
+
+        RecordCode recordCourant = presenteurMastermind.getRecord();
+
+        if (recordCourant == null) {
+            presenteurMastermind.creerRecord(id, nbTentatives, courriel, presenteurMastermind.getIdStat());
+        }
+
+        else if (recordCourant.getNbTentatives() > partie.getNbTentatives()) {
+            presenteurMastermind.changerRecord(id, nbTentatives, courriel);
+        }
     }
 
 
