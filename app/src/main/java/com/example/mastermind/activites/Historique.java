@@ -38,13 +38,13 @@ public class Historique extends AppCompatActivity implements View.OnClickListene
         baseDeDonneeSQLite = new bdSQLite(this, DATABASE_NOM, null, DATABASE_VERSION);
         ArrayList<HashMap<String, String>> liste = baseDeDonneeSQLite.retournerListePartie();
 
-       for (int i = 0; i < liste.size(); i++) {
+       for (int i = liste.size()-1; i >= 0; i--) {
 
             String courriel = liste.get(i).get("Email");
             String code = liste.get(i).get("Code secret");
             String couleurs = liste.get(i).get("nombre de couleurs");
             String resultat = liste.get(i).get("Resultat");
-            String tentatives = "test";
+            String tentatives = liste.get(i).get("Nombre de tentatives");
 
             creerNouvellePartie(courriel, code, couleurs, resultat, tentatives);
         }
