@@ -45,40 +45,42 @@ public class Code {
     }
 
     public String afficherCouleurs() {
-
         String couleursCode = "";
         for (int i = 0; i < this.longueurCode; i++) {
-
             switch (couleurs.get(i)) {
                 case "ffff0000":
-                    couleursCode += "Rouge, ";
+                    couleursCode += "Rouge";
                     break;
                 case "ff00ff00":
-                    couleursCode += "Vert, ";
+                    couleursCode += "Vert";
                     break;
                 case "ff0000ff":
-                    couleursCode += "Bleu, ";
+                    couleursCode += "Bleu";
                     break;
                 case "ffffff00":
-                    couleursCode += "Jaune, ";
+                    couleursCode += "Jaune";
                     break;
                 case "ffff00ff":
-                    couleursCode += "Magenta, ";
+                    couleursCode += "Magenta";
                     break;
                 case "ffffa500":
-                    couleursCode += "Orange,  ";
+                    couleursCode += "Orange";
                     break;
                 case "ff000000":
-                    couleursCode += "Noir, ";
+                    couleursCode += "Noir";
                     break;
                 case "ffffffff":
-                    couleursCode += "Blanc, ";
+                    couleursCode += "Blanc";
                     break;
             }
-        }
 
+            // Ajouter une virgule entre les couleurs
+            if (i < this.longueurCode - 1) {
+                couleursCode += ", ";
+            }
+        }
+        // Ajouter un point si c'est la fin
+        couleursCode += ".";
         return couleursCode;
     }
-
-
 }
