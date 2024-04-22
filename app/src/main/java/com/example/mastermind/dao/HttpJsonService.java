@@ -179,7 +179,7 @@ public class HttpJsonService {
 
         // Executer la requête
         Request request = new Request.Builder()
-                .url(URL_POINT_ENTREE + "/stats" + id)
+                .url(URL_POINT_ENTREE + "/stats?idCode=" + id)
                 .put(corpsRequete)
                 .addHeader("Content-Type", "application/json")
                 .build();
