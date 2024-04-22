@@ -37,9 +37,7 @@ public class PresenteurMastermind {
                     ArrayList<String> couleurs  = MastermindDao.obtenirCouleurs(nbCouleurs);
                     Code code = MastermindDao.obtenirCode(nbCouleurs, longueurCode);
                     RecordCode record = MastermindDao.obtenirRecord(code);
-
-                    System.out.println("record = " + record);
-
+                    
                     modele.setCode(code);
                     modele.setCouleurs(couleurs);
                     modele.setRecord(record);

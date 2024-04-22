@@ -69,7 +69,6 @@ public class HttpJsonService {
 
         OkHttpClient okHttpClient = new OkHttpClient();
 
-        System.out.println("id record = " + id);
         String requete = "/stats?idCode=" + String.valueOf(id);;
 
         Request request = new Request.Builder()

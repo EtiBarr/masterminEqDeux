@@ -23,7 +23,7 @@ public class MastermindDao {
 
         // Choisir un code aléatoire
         int nombreAleatoire = (int) (Math.random() * listeCodes.size()) ;
-        return listeCodes.get(46);
+        return listeCodes.get(nombreAleatoire);
     }
 
     // Retourne le record pour un code
