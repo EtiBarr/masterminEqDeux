@@ -31,6 +31,6 @@ public class RecordCode {
     }
 
     public String toString() {
-        return "Courriel : " + this.getCourriel() + "\tTentatives : " + this.getNbTentatives() + "\n";
+        return "\nCourriel : " + this.getCourriel() + "\tTentatives : " + this.getNbTentatives() + "\n";
     }
 }
