@@ -69,7 +69,8 @@ public class HttpJsonService {
 
         OkHttpClient okHttpClient = new OkHttpClient();
 
-        String requete = "/stats?idCode=" + id;
+        System.out.println("id record = " + id);
+        String requete = "/stats?idCode=" + String.valueOf(id);;
 
         Request request = new Request.Builder()
                 .url(URL_POINT_ENTREE + requete)
@@ -77,8 +78,8 @@ public class HttpJsonService {
 
         Response response = okHttpClient.newCall(request).execute();
         ResponseBody responseBody = response.body();
-
         JSONArray jsonArray = new JSONArray(responseBody.string());
+        System.out.println(jsonArray);
 
         if (jsonArray.length() == 0) {
             return null;
@@ -149,7 +150,7 @@ public class HttpJsonService {
         obj.put("idCode", String.valueOf(id));
         obj.put("record", String.valueOf(nbTentatives));
         obj.put("courriel", courriel);
-        obj.put("id", idStat);
+        obj.put("id", String.valueOf(idStat));
 
         RequestBody corpsRequete = RequestBody.create(obj.toString(), JSON);
 

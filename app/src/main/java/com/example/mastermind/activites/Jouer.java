@@ -510,7 +510,7 @@ public class Jouer extends AppCompatActivity implements View.OnClickListener {
     public void gagnerPartie() throws JSONException, IOException {
 
         envoyerDonneesPartie("Gagné");
-        comparerRecord(partie.getNbTentatives(), partie.getCode().getId());
+        comparerRecord(partie.getCode().getId(),partie.getNbTentatives());
 
         partieTerminee = true;
 
