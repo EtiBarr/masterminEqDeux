@@ -36,7 +36,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="50dp"
-        android:background="#797979" />
+        android:background="#FFFFFF" />
 
     <TextView
         android:id="@+id/tvCode"

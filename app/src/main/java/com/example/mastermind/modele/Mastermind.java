@@ -35,10 +35,10 @@ public class Mastermind {
     }
 
     public ArrayList<ArrayList<String>> getTentatives() {
-        return tentatives;
+        return this.tentatives;
     }
 
     public int getNbTentatives() {
-        return nbTentatives;
+        return this.nbTentatives;
     }
 }
