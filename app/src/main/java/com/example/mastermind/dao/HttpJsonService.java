@@ -188,9 +188,4 @@ public class HttpJsonService {
         ResponseBody responseBody = response.body();
     }
 
-
-
-
-
-
 }
